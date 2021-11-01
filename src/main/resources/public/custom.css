@@ -1,0 +1,215 @@
+body {
+    background-color: rgba(245, 245, 245, 0.979);
+    margin: auto;
+    padding: .5em;
+    max-width: 70em;
+    font-family: 'Arial';
+}
+
+.header {
+    border: 2px solid #28b463;
+    font-family: 'Courier';
+    color: rgb(51, 48, 48);
+    text-shadow:0px 1px 0px #86ae47;
+    background: rgba(144, 238, 144, 0.651);
+    font-weight: bold;
+    padding: 1.5em 1em;
+    font-size: 1em;
+    border-radius: .5em;
+}
+
+.container {
+    background-color: rgb(219, 158, 27);
+    padding: 1.5em 1em;
+    border-radius: .5em;
+    margin-top: .5em;
+    margin-bottom: 2em;
+}
+
+.container-alert {
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+.navbar {
+    background-color: rgba(156, 140, 120, 0.61);
+    display: block;
+    padding: 5px;
+    border-radius: .5em;
+}
+
+.info {
+    color: rgb(255, 196, 0);
+}
+
+form {
+    display: block;
+    padding: .5em;
+}
+
+table {
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+    border-collapse: collapse;
+}
+
+.minitable {
+    font-family: Arial;
+    border-collapse: collapse;
+    border: none !important;
+    width: 100%;
+}
+
+.minitd, .minith {
+    border-collapse: collapse;
+    border: none !important;
+    background-color: white;
+    text-align: left;
+    padding: 2px;
+}
+
+.minitr:ntn-child(even) {
+    border-collapse: collapse;
+    border: none !important;
+    background-color: white;
+}
+
+
+span {
+    margin-left: 2em;
+}
+
+.big {
+    margin-left: 8em;
+    margin-right: 8em;
+}
+
+
+.alert-success {
+    color: green;
+    border-radius: .5em;
+    padding: 1px 8px;
+    border: 2px solid rgb(165, 233, 39);
+    background-color: rgba(195, 240, 165, 0.623);
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: rgb(109, 100, 100);
+}
+
+.column {
+    float: left;
+    width: 30%;
+}
+
+.columnRight {
+    float: right;
+    width: 30%;
+    align-content: flex-end;
+    text-align: right;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.mainButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ededed 5%, #cccccc 100%);
+	background-color:#ffffff;
+	border-radius: .3em;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:rgb(94, 86, 86);
+	font-size:13px;
+	padding: .2em .5em;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+.mainButton:hover {
+	background:linear-gradient(to bottom, #d2e4a7 5%, #d5e9ab 100%);
+	background-color: #dbecb3;
+}
+.mainButton:active {
+	position:relative;
+	top:1px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 250px;
+    background-color: rgba(59, 59, 59, 0.815);
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.tooltip-left {
+    top: -5px;
+    right: 105%;  
+ }
+
+.tooltip-right {
+    top: -5px;
+    left: 105%
+ }
+
+.tooltip-top {
+    width: 120px;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -120px;
+}
+
+input[name=search] {
+    width: 130px;
+    margin-right: 5px;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+  
+
+input[name=search]:focus {
+    margin-right: 5px;
+    margin-left: 0px;
+    width: 100%;
+}

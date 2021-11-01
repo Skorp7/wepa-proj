@@ -28,11 +28,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 public class Account extends AbstractPersistable<Long>{
     
-    @Size(min = 2, max = 20, message = "Username must be between 2 and 20 characters")
+    @Size(min = 2, max = 20, message = "Username must be between 2 and 20 characters.")
     @Column(unique = true)
     private String username;
     
-    @Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters")
+    @Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters.")
     private String name;
     
     private String password;

@@ -39,7 +39,7 @@
                                 Followers:
                             </ul>
                             <ul th:if="${#lists.isEmpty(account.followers)}">
-                                You have no followers
+                                You have no followers.
                             </ul>
                             <ul>
                                 <li th:each="account : ${account.followers}">

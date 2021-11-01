@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-<!--        <link rel="stylesheet" th:href="@{/public/custom.css}"/>  -->
+        <!--        <link rel="stylesheet" th:href="@{/public/custom.css}"/>  -->
         <link rel="stylesheet" href="custom.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta charset="UTF-8" />
@@ -19,7 +19,37 @@
 
             <div class="card">
                 <div class="card-body">
-                    Nothing here yet. 
+                    <div class="row">
+                        <div class="col"> Nothing here yet.</div>
+                        <div class="col"></div>
+                        <div class="col">
+                            <ul>
+                                People you follow:
+                            </ul>
+                            <ul th:if="${#lists.isEmpty(account.following)}">
+                                You are not following anyone.
+                            </ul>
+                            <ul>
+                                <li th:each="account : ${account.following}">
+                                    <a th:href="@{/profiles/{id}(id=${account.username})}"><span th:text="${account.name}">name</span></a>
+                                </li>
+                            </ul>
+
+                            <ul>
+                                Followers:
+                            </ul>
+                            <ul th:if="${#lists.isEmpty(account.followers)}">
+                                You have no followers
+                            </ul>
+                            <ul>
+                                <li th:each="account : ${account.followers}">
+                                    <a th:href="@{/profiles/{id}(id=${account.username})}"><span th:text="${account.name}">name</span></a>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </div>
                 </div>
             </div>
 

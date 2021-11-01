@@ -36,10 +36,18 @@ public class ProfileService {
         return true;
     }
     
+    public Integer getFollowerCount(Account acc) {
+        if (acc == null) return -99;
+        Set<Account> followers = acc.getFollowers();
+        if (followers == null || followers.isEmpty()) return 0;
+        return followers.size();
+    }
+    
     public Account getAccountByUsername(String username) {
         Account acc = accRepo.findByUsername(username);
         return acc;
     }
+    
     
     public List<Account> getAccountsByNameContaining(String word) {
         return accRepo.findByNameIgnoreCaseContaining(word);

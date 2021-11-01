@@ -1,0 +1,35 @@
+
+
+
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" th:href="@{/public/custom.css}"/>  
+       <!-- <link rel="stylesheet" href="custom.css"/> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta charset="UTF-8" />
+
+        <title>My wall</title>
+    </head>
+    <body>
+        <div class="container">
+            <div th:replace="fragments/layout :: navi"></div>
+        </div>
+        <div class="container"><span th:text="${account.name}">name</span>'s wall
+
+            <div class="card">
+                <div class="card-body">
+                    Has <span th:text="${#sets.size(account.followers)}">count</span> followers.
+                    <form action="/profiles" method="post">
+                        <input type="hidden" name="username" th:value="${account.username}"/>
+                        <button type="submit">Follow</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </body>
+</html>
+
+

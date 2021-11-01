@@ -40,4 +40,8 @@ public class ProfileService {
         Account acc = accRepo.findByUsername(username);
         return acc;
     }
+    
+    public List<Account> getAccountsByNameContaining(String word) {
+        return accRepo.findByNameIgnoreCaseContaining(word);
+    }
 }

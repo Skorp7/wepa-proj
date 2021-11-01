@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 public class MyApplication {
-    @Profile("production")
+
     public static void main(String[] args) {
         SpringApplication.run(MyApplication.class);
     }

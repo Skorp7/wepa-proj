@@ -65,7 +65,7 @@ public class Profile extends AbstractPersistable<Long> {
         Long objId = ((Profile) obj).getId();
         return objId == null ? false : Objects.equals(getId(), objId);
     }
-    
+
     @Override
     public String toString() {
         return this.name;

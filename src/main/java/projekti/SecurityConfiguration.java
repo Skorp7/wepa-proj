@@ -29,8 +29,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/h2-console", "/h2-console/**").permitAll()
-                .anyRequest().authenticated();
-        http.formLogin()
+                .antMatchers("/public/**").permitAll()
+                .antMatchers("/registration").permitAll()
+                .antMatchers("/").permitAll()
+                .anyRequest().authenticated()
+                .and()
+            .logout().permitAll()
+                .and()
+            .formLogin()
                 .permitAll();
     }
 
@@ -43,18 +49,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-//
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        // withdefaultpasswordencoder on deprekoitu mutta toimii yhä
-//        UserDetails user = User.withDefaultPasswordEncoder()
-//                               .username("hei")
-//                               .password("maailma")
-//                               .authorities("USER")
-//                               .build();
-//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//        manager.createUser(user);
-//        return manager;
-//    }
+
 }

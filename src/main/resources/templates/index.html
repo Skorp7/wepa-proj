@@ -1,17 +1,24 @@
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-        <link rel="stylesheet" th:href="@{/public/style.css}"/>
+        <link rel="stylesheet" th:href="@{/public/style.css}"/>        
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta charset="UTF-8" />
-        
+
         <title>Hello world</title>
     </head>
     <body>
 
         <h1 th:text="${'Hello ' + message}">Hello world</h1>
+        <div sec:authorize="!isAuthenticated()">
+            <a href="/login"><button>Log in</button></a>
+            <a href="/registration"><button>Sign up</button></a>
+        </div>
 
-
+        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+            <input type="submit" value="Log Out"/>
+        </form>
     </body>
 </html>
+

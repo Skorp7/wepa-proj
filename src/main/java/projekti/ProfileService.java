@@ -15,29 +15,29 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProfileService {
     @Autowired
-    ProfileRepository profRepo;
+    AccountRepository accRepo;
     
-    public boolean addProfile(String name, String pass, String profilename) {
-        profRepo.save(new Profile(name, pass, profilename, new HashSet<>(), new HashSet<>()));
+    public boolean addProfile(String username, String name, String pass) {
+        accRepo.save(new Account(username, name, pass, new HashSet<>(), new HashSet<>()));
         return true;
     }
     
     @Transactional
-    public boolean addFollowerTo(Profile profile, Profile follower) {
-        Set<Profile> followers = profile.getFollowers();
+    public boolean addFollowerTo(Account acc, Account follower) {
+        Set<Account> followers = acc.getFollowers();
         followers.add(follower);
-        profile.setFollowers(followers);
-        profRepo.save(profile);
+        acc.setFollowers(followers);
+        accRepo.save(acc);
 
-        Set<Profile> following = follower.getFollowing();
-        following.add(profile);
+        Set<Account> following = follower.getFollowing();
+        following.add(acc);
         follower.setFollowing(following);
-        profRepo.save(follower);
+        accRepo.save(follower);
         return true;
     }
     
-    public Profile getProfileByProfileName(String profilename) {
-        List<Profile> lista = profRepo.findByProfilename(profilename);
-        return lista.get(0);
+    public Account getAccountByUsername(String username) {
+        Account acc = accRepo.findByUsername(username);
+        return acc;
     }
 }

@@ -19,12 +19,11 @@ public class ProfileController {
 
     
     @GetMapping("/profile")
-    public String profile(Model model) {
+    public String profile() {
         String name = "Sinä";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         name = auth.getName();
-        model.addAttribute("message", name);
-        
+
         return "index";
     }
 }

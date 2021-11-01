@@ -32,4 +32,5 @@ public class CustonUserDetailService implements UserDetailsService {
                 true,
                 Arrays.asList(new SimpleGrantedAuthority("USER")));
     }
+    
 }

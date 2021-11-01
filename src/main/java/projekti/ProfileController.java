@@ -23,12 +23,10 @@ public class ProfileController {
     List<Account> accounts;
     
     @GetMapping("/profile")
-    public String profile() {
-        String name = "Sinä";
+    public String profile(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        name = auth.getName();
-
-        return "index";
+        model.addAttribute("account", profServ.getAccountByUsername(auth.getName()));
+        return "profile";
     }
     
     @GetMapping("/seek")

@@ -2,16 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-        <link rel="stylesheet" th:href="@{/public/style.css}"/>
+        <link rel="stylesheet" href="custom.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta charset="UTF-8" />
 
         <title>Hello world</title>
     </head>
-    <body class="hold-transition register-page">
-        <div class="register-box">
+    <body>
+        <div class="container">
             <div class="card">
-                <div class="card-body register-card-body">
+                <div class="card-body">
                     <p class="login-box-msg">Register a new account</p>
 
                     <form action="#" th:action="@{/registration}" th:object="${account}" method="post">
@@ -27,12 +27,12 @@
                         <div class="input-group mb-3">
                             <input type="password" class="form-control" th:field="*{password}" placeholder="Password"/>
                             <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Message</div>
-
+                        </div>
                             <button type="submit">Submit</button>
                     </form>
                 </div>
                 <!-- /.form-box -->
-            </div><!-- /.card -->
+        </div>
         </div>
 
     </body>

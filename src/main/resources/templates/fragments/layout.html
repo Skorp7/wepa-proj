@@ -10,10 +10,10 @@
     </head>
 
     <body>
-
-        <div th:fragment="navi" class="container">
-            <nav class="navbar navbar-expand-sm navbar-light">
-                <a class="navbar-brand" href="#">Twiit</a>
+            <div class="container">
+            <center>Twitser</center>
+            <nav th:fragment="navi" class="navbar navbar-expand-sm navbar-light">
+                <a class="navbar-brand" href="#"></a>
                 <ul class="navbar-nav">
 
                     <li sec:authorize="!isAuthenticated()" class="nav-item">
@@ -30,12 +30,15 @@
                         </form>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a class="nav-link" href="/profile"><button>My wall</button></a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
                         <a class="nav-link" href="/seek"><button>Seek</button></a>
                     </li>
                 </ul>
             </nav>
-        </div>
-
+       
+            </div>
 
 
     </body>

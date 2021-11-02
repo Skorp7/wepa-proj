@@ -31,27 +31,28 @@ public class ImageController {
     @Autowired
     private ImageRepository imgRepo;
     
-//    @GetMapping("/profiles/{username}/pics")
-//    public String profilesImg(@PathVariable String username, Model model) {
-//        model.addAttribute("images", imgServ.getImagesByUsername(username));
-//        model.addAttribute("account", profServ.getAccountByUsername(username));
-//        return "pics";
-//    }
-
     @GetMapping("/profiles/{username}/pics")
     public String profilesImg(@PathVariable String username, Model model) {
         Account acc = profServ.getAccountByUsername(username);
-        List<Image> lista = imgRepo.findAll();
-        ArrayList<Image> filter = new ArrayList<>();
-        for (Image img : lista) {
-            if (img.getAccount().getUsername().equals(acc.getUsername())) {
-                filter.add(img);
-            }
-        }
+        model.addAttribute("images", imgServ.getImagesByAccount(acc));
         model.addAttribute("account", acc);
-        model.addAttribute("images", lista);
         return "pics";
     }
+
+//    @GetMapping("/profiles/{username}/pics")
+//    public String profilesImg(@PathVariable String username, Model model) {
+//        Account acc = profServ.getAccountByUsername(username);
+//        List<Image> lista = imgRepo.findAll();
+//        ArrayList<Image> filter = new ArrayList<>();
+//        for (Image img : lista) {
+//            if (img.getAccount().getUsername().equals(acc.getUsername())) {
+//                filter.add(img);
+//            }
+//        }
+//        model.addAttribute("account", acc);
+//        model.addAttribute("images", lista);
+//        return "pics";
+//    }
     
     @PostMapping("/profiles/{username}/pics")
     public String imageIn(@RequestParam("file") MultipartFile file, 
@@ -66,20 +67,20 @@ public class ImageController {
     public byte[] get(@PathVariable Long id) {
         return imgServ.getContentById(id);       
     }
-    
-    @GetMapping(path = "/conts" )
-    @ResponseBody
-    public String getConts() {
-        Account acc = profServ.getAccountByUsername("pil");
-        List<Image> lista = imgRepo.findAll();
-        ArrayList<Image> filter = new ArrayList<>();
-        for (Image img : lista) {
-            if (img.getAccount().getUsername().equals(acc.getUsername())) {
-                filter.add(img);
-            }
-        }
-        return filter.toString();
-    }
+//    
+//    @GetMapping(path = "/conts" )
+//    @ResponseBody
+//    public String getConts() {
+//        Account acc = profServ.getAccountByUsername("pil");
+//        List<Image> lista = imgRepo.findAll();
+//        ArrayList<Image> filter = new ArrayList<>();
+//        for (Image img : lista) {
+//            if (img.getAccount().getUsername().equals(acc.getUsername())) {
+//                filter.add(img);
+//            }
+//        }
+//        return filter.toString();
+//    }
 
 //        @GetMapping("{profilename}/images")
 //    public String redirect(@PathVariable String profilename) {

@@ -5,6 +5,7 @@ package projekti;
  * @author sakorpi
  */
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -63,8 +64,14 @@ public class ImageController {
     @ResponseBody
     public String getConts() {
         Account acc = profServ.getAccountByUsername("pil");
-      //  List<Image> lista = imgRepo.findByAccount(acc, Sort.by("id"));
-        return acc.toString();
+        List<Image> lista = imgRepo.findAll();
+        ArrayList<Image> filter = new ArrayList<>();
+        for (Image img : lista) {
+            if (img.getAccount().getUsername().equals(acc.getUsername())) {
+                filter.add(img);
+            }
+        }
+        return filter.toString();
     }
 
 //        @GetMapping("{profilename}/images")

@@ -58,12 +58,12 @@ public class ImageController {
         return imgServ.getContentById(id);       
     }
     
-    @GetMapping(path = "/conts" )
-    @ResponseBody
-    public String getConts() {
-        List<Image> lista = imgRepo.findAll();
-        return lista.toString();
-    }
+//    @GetMapping(path = "/conts" )
+//    @ResponseBody
+//    public String getConts() {
+//        List<Image> lista = imgRepo.findAll();
+//        return lista.toString();
+//    }
 
 //        @GetMapping("{profilename}/images")
 //    public String redirect(@PathVariable String profilename) {

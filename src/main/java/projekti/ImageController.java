@@ -41,8 +41,15 @@ public class ImageController {
     @GetMapping("/profiles/{username}/pics")
     public String profilesImg(@PathVariable String username, Model model) {
         Account acc = profServ.getAccountByUsername(username);
+        List<Image> lista = imgRepo.findAll();
+        ArrayList<Image> filter = new ArrayList<>();
+        for (Image img : lista) {
+            if (img.getAccount().getUsername().equals(acc.getUsername())) {
+                filter.add(img);
+            }
+        }
         model.addAttribute("account", acc);
-        model.addAttribute("images", imgServ.getImagesByAccount(acc));
+        model.addAttribute("images", filter);
         return "pics";
     }
     

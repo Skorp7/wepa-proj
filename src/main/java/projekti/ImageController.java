@@ -25,13 +25,18 @@ public class ImageController {
     @Autowired
     private ProfileService profServ;
     
+//    @GetMapping("/profiles/{username}/pics")
+//    public String profilesImg(@PathVariable String username, Model model) {
+//        model.addAttribute("images", imgServ.getImagesByUsername(username));
+//        model.addAttribute("account", profServ.getAccountByUsername(username));
+//        return "pics";
+//    }
+
     @GetMapping("/profiles/{username}/pics")
-    public String profilesImg(@PathVariable String username, Model model) {
-        model.addAttribute("images", imgServ.getImagesByUsername(username));
-        model.addAttribute("account", profServ.getAccountByUsername(username));
+    public String profilesImg(@PathVariable String username) {
         return "pics";
     }
-
+    
     @PostMapping("/profiles/{username}/pics")
     public String imageIn(@RequestParam("file") MultipartFile file, 
             @RequestParam boolean icon,

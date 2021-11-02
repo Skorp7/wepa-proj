@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 // muita sopivia annotaatioita
@@ -19,6 +20,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Image extends AbstractPersistable<Long> {
 
     @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] content;
     
     @ManyToOne

@@ -7,6 +7,7 @@ package projekti;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,12 +59,13 @@ public class ImageController {
         return imgServ.getContentById(id);       
     }
     
-//    @GetMapping(path = "/conts" )
-//    @ResponseBody
-//    public String getConts() {
-//        List<Image> lista = imgRepo.findAll();
-//        return lista.toString();
-//    }
+    @GetMapping(path = "/conts" )
+    @ResponseBody
+    public String getConts() {
+        Account acc = profServ.getAccountByUsername("pil");
+        List<Image> lista = imgRepo.findByAccount(acc, Sort.by("id"));
+        return lista.toString();
+    }
 
 //        @GetMapping("{profilename}/images")
 //    public String redirect(@PathVariable String profilename) {

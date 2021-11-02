@@ -49,7 +49,7 @@ public class ImageController {
             }
         }
         model.addAttribute("account", acc);
-        model.addAttribute("images", filter);
+        model.addAttribute("images", lista);
         return "pics";
     }
     

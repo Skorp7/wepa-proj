@@ -37,6 +37,20 @@ public class ProfileService {
         return true;
     }
     
+    @Transactional
+    public boolean removeFollowerFrom(Account acc, Account follower) {
+        Set<Account> followers = acc.getFollowers();
+        followers.remove(follower);
+        acc.setFollowers(followers);
+        accRepo.save(acc);
+
+        Set<Account> following = follower.getFollowing();
+        following.remove(acc);
+        follower.setFollowing(following);
+        accRepo.save(follower);
+        return true;
+    }
+    
     public Integer getFollowerCount(Account acc) {
         if (acc == null) return -99;
         Set<Account> followers = acc.getFollowers();

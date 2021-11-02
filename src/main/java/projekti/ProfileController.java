@@ -33,20 +33,29 @@ public class ProfileController {
     
     @GetMapping("/profiles/{username}")
     public String profiles(@PathVariable String username, Model model) {
-        model.addAttribute("account", profServ.getAccountByUsername(username));
+        Account acc = profServ.getAccountByUsername(username);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isFollower = false;
+        if (acc.getFollowers().stream().anyMatch(a -> a.getUsername().equals(auth.getName()))) {
+            isFollower = true;
+        }
+        model.addAttribute("account", acc);
+        model.addAttribute("isFollower", isFollower);
         return "profiles";
     }
     
     @PostMapping("/profiles")
-    public String profilesAdd(@RequestParam String username) {
+    public String profilesFollowOrNot(@RequestParam String username, @RequestParam boolean isFollower) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account follower = profServ.getAccountByUsername(auth.getName());
         Account acc = profServ.getAccountByUsername(username);
-        profServ.addFollowerTo(acc, follower);
+        if (isFollower) {
+            profServ.removeFollowerFrom(acc, follower);
+        } else {
+            profServ.addFollowerTo(acc, follower);
+        }
         return "redirect:/profiles/" + username;
     }
-    
-
     
     
     @GetMapping("/seek")

@@ -24,7 +24,9 @@
                     Has <span th:text="${#sets.size(account.followers)}">count</span> followers.
                     <form action="/profiles" method="post">
                         <input type="hidden" name="username" th:value="${account.username}"/>
-                        <button type="submit">Follow</button>
+                        <input type="hidden" name="isFollower" th:value="${isFollower}"/>
+                        <button th:if="${isFollower}" type="submit">Stop to follow</button>
+                        <button th:unless="${isFollower}" type="submit">Follow</button>
                     </form>
                 </div>
             </div>

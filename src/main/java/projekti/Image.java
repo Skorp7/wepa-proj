@@ -22,7 +22,8 @@ public class Image extends AbstractPersistable<Long> {
     private byte[] content;
     
     @ManyToOne
-    private String owner;
+    @JoinColumn(name = "username")
+    private Account account;
     
     private boolean icon;
 

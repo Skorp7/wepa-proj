@@ -24,7 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ImageService {
     @Autowired
-    ImageRepository  imgRepo;
+    ImageRepository imgRepo;
+    
+    @Autowired
+    AccountRepository accRepo;
     
     public boolean addImage(MultipartFile file, String username, boolean icon) throws IOException {
         if (file.getContentType().contains("image")) {
@@ -33,7 +36,8 @@ public class ImageService {
                 old_icon.setIcon(false);
                 imgRepo.save(old_icon);
             }
-            Image img = new Image(file.getBytes(), username, icon);
+            Account acc = accRepo.findByUsername(username);
+            Image img = new Image(file.getBytes(), acc, icon);
             imgRepo.save(img);
             return true;
         } else {
@@ -50,10 +54,12 @@ public class ImageService {
     }
     
     public Image getIconByUsername(String username) {
-        return imgRepo.findByOwnerAndIcon(username, true);
+        Account acc = accRepo.findByUsername(username);
+        return imgRepo.findByAccountAndIcon(acc, true);
     }
     
     public List<Image> getImagesByUsername(String username) {
-        return imgRepo.findByOwner(username, Sort.by("id").descending());
+        Account acc = accRepo.findByUsername(username);
+        return imgRepo.findByAccount(acc, Sort.by("id").descending());
     }
 }

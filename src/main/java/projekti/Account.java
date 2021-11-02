@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -54,7 +55,7 @@ public class Account extends AbstractPersistable<Long>{
     )
     private Set<Account> followers;
     
-    @OneToMany(mappedBy = "image")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<Image> images = new ArrayList<>();
     
     @Override

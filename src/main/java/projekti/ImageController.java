@@ -63,7 +63,7 @@ public class ImageController {
     @ResponseBody
     public String getConts() {
         Account acc = profServ.getAccountByUsername("pil");
-        List<Image> lista = imgRepo.findByAccount(acc, Sort.by("id"));
+      //  List<Image> lista = imgRepo.findByAccount(acc, Sort.by("id"));
         return acc.toString();
     }
 

@@ -5,6 +5,7 @@ package projekti;
  * @author sakorpi
  */
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,9 @@ public class ImageController {
     
     @Autowired
     private ProfileService profServ;
+    
+    @Autowired
+    private ImageRepository imgRepo;
     
 //    @GetMapping("/profiles/{username}/pics")
 //    public String profilesImg(@PathVariable String username, Model model) {
@@ -52,6 +56,13 @@ public class ImageController {
     @ResponseBody
     public byte[] get(@PathVariable Long id) {
         return imgServ.getContentById(id);       
+    }
+    
+    @GetMapping(path = "/conts" )
+    @ResponseBody
+    public String getConts() {
+        List<Image> lista = imgRepo.findAll();
+        return lista.toString();
     }
 
 //        @GetMapping("{profilename}/images")

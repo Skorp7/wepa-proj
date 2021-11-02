@@ -54,7 +54,7 @@ public class Account extends AbstractPersistable<Long>{
     )
     private Set<Account> followers;
     
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "image")
     private List<Image> images = new ArrayList<>();
     
     @Override

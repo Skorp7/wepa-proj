@@ -64,7 +64,7 @@ public class ImageController {
     public String getConts() {
         Account acc = profServ.getAccountByUsername("pil");
         List<Image> lista = imgRepo.findByAccount(acc, Sort.by("id"));
-        return lista.toString();
+        return acc.toString();
     }
 
 //        @GetMapping("{profilename}/images")

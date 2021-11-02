@@ -25,12 +25,20 @@ public class ProfileController {
     @Autowired
     MessageService msgServ;
     
+    @Autowired
+    ImageService imgServ;
+    
     List<Account> accounts;
     
     @GetMapping("/profile")
     public String profile(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("account", profServ.getAccountByUsername(auth.getName()));
+        Account acc = profServ.getAccountByUsername(auth.getName());
+        Image icon = imgServ.getIconByUsername(auth.getName());
+        List<Message> messages = msgServ.getMessagesByAccount(acc);
+        model.addAttribute("account", acc);
+        model.addAttribute("messages", messages);
+        model.addAttribute("icon", icon);
         return "profile";
     }
     
@@ -39,7 +47,7 @@ public class ProfileController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account acc = profServ.getAccountByUsername(username);
         List<Message> messages = msgServ.getMessagesByAccount(acc);
-
+        Image icon = imgServ.getIconByUsername(username);
         boolean isFollower = false;
         if (acc.getFollowers().stream().anyMatch(a -> a.getUsername().equals(auth.getName()))) {
             isFollower = true;
@@ -47,6 +55,7 @@ public class ProfileController {
         model.addAttribute("account", acc);
         model.addAttribute("isFollower", isFollower);
         model.addAttribute("messages", messages);
+        model.addAttribute("icon", icon);
         return "profiles";
     }
     
@@ -64,11 +73,16 @@ public class ProfileController {
     }
     
     @PostMapping("/messages")
-    public String profilesAddMsg(@RequestParam String username, @RequestParam String message) {
+    public String profilesAddMsg(@RequestParam String username, 
+            @RequestParam String message, 
+            @RequestParam String fromSite) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account accTo = profServ.getAccountByUsername(username);
         msgServ.addMessage(message, accTo, auth.getName());
-        return "redirect:/profiles/" + username;
+        if (fromSite.equals("public")) {
+            return "redirect:/profiles/" + username;
+        }
+        return "redirect:/profile";
     }
     
     

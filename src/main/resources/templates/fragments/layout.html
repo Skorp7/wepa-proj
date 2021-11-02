@@ -41,8 +41,32 @@
             </div>
         
         
-        
+        <div th:fragment="messageCenter" class="card">
+            <form th:action="@{/messages}" method="POST">
+                Write on the wall:
+                <input name="message"/> 
+                <input type="hidden" th:if="${#strings.contains(#httpServletRequest.requestURI, 'profiles')}" name="fromSite" value="public"/>
+                <input type="hidden" th:unless="${#strings.contains(#httpServletRequest.requestURI, 'profiles')}" name="fromSite" value="own"/>
+                <input type="hidden" name="username" th:value="${account.username}"/><button type="submit">Send</button>
+            </form> 
 
+            <div class="card-body">
+                <ul>
+                    <li th:each="message : ${messages}">
+                        <small th:text="${{message.datetime}}">date</small> - <a th:href="@{/profiles/{id}(id=${message.usernamefrom})}"><small th:text="${{message.usernamefrom}}">name</small></a>
+                        <p th:text="${message.message}">msg</p> 
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div th:fragment="profileBox" class="card">
+            <div class="card-body">
+                <h4 th:text="${account.name}">name</h4>
+                <img th:unless="${icon}" src="/icon.png" alt="profile image" width="200" height="200"/>
+                <img th:if="${icon}" th:src="@{/profiles/{username}/pics/{id}/content(username=${account.username}, id=${icon.id})}" alt="profile image" width="200" height="200"/>
+            </div>
+        </div>
 
     </body>
 </html>

@@ -20,9 +20,16 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col"> Nothing here yet.</div>
+
+                        <div class="col"> 
+                            <div th:replace="fragments/layout :: messageCenter"></div>
+                        </div>
+
                         <div class="col"></div>
                         <div class="col">
+
+                            <div th:replace="fragments/layout :: profileBox"></div>
+
                             <div class="card">
                                 <div class="card-body">
                                     <h4>
@@ -56,10 +63,10 @@
 
                                     <form method="POST" th:action="@{/profiles/{username}/pics(username=${account.username})}" enctype="multipart/form-data">
                                         <div> <input type="checkbox" id="icon" name="icon"/>
-                                              <input type="hidden" name="icon" value="false"/>
-                                                <label for="icon">Set as profile picture</label>
-                                                <input type="file" name="file" id="file"/>
-                                                <input type="submit" value="Add!"/>
+                                            <input type="hidden" name="icon" value="false"/>
+                                            <label for="icon">Set as profile picture</label>
+                                            <input type="file" name="file" id="file"/>
+                                            <input type="submit" value="Add!"/>
                                         </div>
                                     </form>
 

@@ -58,8 +58,7 @@ public class ImageService {
         return imgRepo.findByAccountAndIcon(acc, true);
     }
     
-    public List<Image> getImagesByUsername(String username) {
-        Account acc = accRepo.findByUsername(username);
+    public List<Image> getImagesByAccount(Account acc) {
         return imgRepo.findByAccount(acc, Sort.by("id").descending());
     }
 }

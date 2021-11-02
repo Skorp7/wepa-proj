@@ -34,8 +34,9 @@ public class ImageController {
 
     @GetMapping("/profiles/{username}/pics")
     public String profilesImg(@PathVariable String username, Model model) {
-        model.addAttribute("account", profServ.getAccountByUsername(username));
-        model.addAttribute("images", imgServ.getImagesByUsername(username));
+        Account acc = profServ.getAccountByUsername(username);
+        model.addAttribute("account", acc);
+        model.addAttribute("images", imgServ.getImagesByAccount(acc));
         return "pics";
     }
     

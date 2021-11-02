@@ -59,6 +59,6 @@ public class ImageService {
     }
     
     public List<Image> getImagesByAccount(Account acc) {
-        return imgRepo.findByAccount(acc, Sort.by("id").descending());
+        return imgRepo.findByAccount(acc);
     }
 }

@@ -6,6 +6,8 @@ body {
     font-family: 'Arial';
 }
 
+li { list-style: none; }
+
 .header {
     border: 2px solid #28b463;
     font-family: 'Courier';
@@ -90,6 +92,10 @@ tr:nth-child(even) {
 
 span {
     margin-left: 2em;
+}
+
+.span-small {
+    margin-left: 0em;
 }
 
 .big {

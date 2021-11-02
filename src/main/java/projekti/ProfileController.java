@@ -22,6 +22,9 @@ public class ProfileController {
     @Autowired
     ProfileService profServ;
     
+    @Autowired
+    MessageService msgServ;
+    
     List<Account> accounts;
     
     @GetMapping("/profile")
@@ -33,14 +36,17 @@ public class ProfileController {
     
     @GetMapping("/profiles/{username}")
     public String profiles(@PathVariable String username, Model model) {
-        Account acc = profServ.getAccountByUsername(username);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Account acc = profServ.getAccountByUsername(username);
+        List<Message> messages = msgServ.getMessagesByAccount(acc);
+
         boolean isFollower = false;
         if (acc.getFollowers().stream().anyMatch(a -> a.getUsername().equals(auth.getName()))) {
             isFollower = true;
         }
         model.addAttribute("account", acc);
         model.addAttribute("isFollower", isFollower);
+        model.addAttribute("messages", messages);
         return "profiles";
     }
     
@@ -54,6 +60,14 @@ public class ProfileController {
         } else {
             profServ.addFollowerTo(acc, follower);
         }
+        return "redirect:/profiles/" + username;
+    }
+    
+    @PostMapping("/messages")
+    public String profilesAddMsg(@RequestParam String username, @RequestParam String message) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Account accTo = profServ.getAccountByUsername(username);
+        msgServ.addMessage(message, accTo, auth.getName());
         return "redirect:/profiles/" + username;
     }
     

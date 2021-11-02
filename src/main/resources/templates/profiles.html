@@ -5,8 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-<!--        <link rel="stylesheet" th:href="${pageContext.request.contextPath}/resources/public/custom.css" />-->
-<!--        <link rel="stylesheet" th:href="@{/public/custom.css}" href="/public/custom.css"/> -->
+        <!--        <link rel="stylesheet" th:href="${pageContext.request.contextPath}/resources/public/custom.css" />-->
+        <!--        <link rel="stylesheet" th:href="@{/public/custom.css}" href="/public/custom.css"/> -->
         <link rel="stylesheet" href="/custom.css"/> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta charset="UTF-8" />
@@ -18,19 +18,49 @@
             <div th:replace="fragments/layout :: navi"></div>
         </div>
         <div class="container"><span th:text="${account.name}">name</span>'s wall <a th:href="@{/profiles/{id}/pics(id=${account.username})}"><span th:text="${account.name}">name</span>'s pictures</a>
-
             <div class="card">
                 <div class="card-body">
-                    Has <span th:text="${#sets.size(account.followers)}">count</span> followers.
-                    <form action="/profiles" method="post">
-                        <input type="hidden" name="username" th:value="${account.username}"/>
-                        <input type="hidden" name="isFollower" th:value="${isFollower}"/>
-                        <button th:if="${isFollower}" type="submit">Stop to follow</button>
-                        <button th:unless="${isFollower}" type="submit">Follow</button>
-                    </form>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card">
+                                
+                                <form th:action="@{/messages}" method="POST">
+                                    Write on the wall:
+                                    <input name="message"></input>  
+                                    <input type="hidden" name="username" th:value="${account.username}"/><button type="submit">Send</button>
+                                </form> 
+                                
+                                <div class="card-body">
+                                    <ul>
+                                        <li th:each="message : ${messages}">
+                                            <small th:text="${{message.datetime}}">date</small> - <small th:text="${{message.usernamefrom}}">name</small>
+                                            <p th:text="${message.message}">msg</p> 
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="col"></div>
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body">
+                                    Has <span class="span-small" th:text="${#sets.size(account.followers)}">count</span> followers.
+                                    <form action="/profiles" method="post">
+                                        <input type="hidden" name="username" th:value="${account.username}"/>
+                                        <input type="hidden" name="isFollower" th:value="${isFollower}"/>
+                                        <button th:if="${isFollower}" type="submit">Stop to follow</button>
+                                        <button th:unless="${isFollower}" type="submit">Follow</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
-
         </div>
     </body>
 </html>

@@ -19,7 +19,7 @@ public class ProfileService {
     AccountRepository accRepo;
     
     public boolean addProfile(String username, String name, String pass) {
-        accRepo.save(new Account(username, name, pass, new HashSet<>(), new HashSet<>(), new ArrayList<>()));
+        accRepo.save(new Account(username, name, pass, new HashSet<>(), new HashSet<>(), new ArrayList<>(), new ArrayList<>()));
         return true;
     }
     

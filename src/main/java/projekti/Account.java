@@ -58,6 +58,9 @@ public class Account extends AbstractPersistable<Long>{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<Image> images = new ArrayList<>();
     
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accountto")
+    private List<Message> messages = new ArrayList<>();
+    
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());

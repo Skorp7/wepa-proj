@@ -61,7 +61,7 @@ public class ImageController {
         return "redirect:/profiles/" + username + "/pics";
     }
     
-    @GetMapping(path = "/profiles/{username}/pics/{id}/content", produces = "image/png")
+    @GetMapping(path = "/profiles/{username}/pics/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] get(@PathVariable Long id) {
         return imgServ.getContentById(id);       

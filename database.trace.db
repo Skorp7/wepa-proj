@@ -2949,3 +2949,15 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:/home/sakorp
 	at org.h2.mvstore.FileStore.open(FileStore.java:172)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
 	... 44 more
+2021-11-02 14:17:53 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SCHEMA[*]"; expected "SET, SAVEPOINT, SCRIPT, SHUTDOWN, SHOW"; SQL statement:
+schema [42001-200]
+2021-11-02 14:18:29 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]\DT+ IMAGE"; SQL statement:
+\dt+ image [42000-200]
+2021-11-02 14:18:35 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DT[*]+ IMAGE"; expected "DELETE, DROP, DECLARE, DEALLOCATE"; SQL statement:
+dt+ image [42001-200]
+2021-11-02 14:18:37 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "D[*]+ IMAGE"; expected "DELETE, DROP, DECLARE, DEALLOCATE"; SQL statement:
+d+ image [42001-200]

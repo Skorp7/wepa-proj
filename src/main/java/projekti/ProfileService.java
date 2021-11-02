@@ -1,6 +1,7 @@
 
 package projekti;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,7 @@ public class ProfileService {
     AccountRepository accRepo;
     
     public boolean addProfile(String username, String name, String pass) {
-        accRepo.save(new Account(username, name, pass, new HashSet<>(), new HashSet<>()));
+        accRepo.save(new Account(username, name, pass, new HashSet<>(), new HashSet<>(), new ArrayList<>()));
         return true;
     }
     

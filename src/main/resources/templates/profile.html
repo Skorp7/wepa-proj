@@ -15,7 +15,7 @@
         <div class="container">
             <div th:replace="fragments/layout :: navi"></div>
         </div>
-        <div class="container"><span th:text="${account.name}">name</span>'s wall
+        <div class="container"><span>My wall</span> <a th:href="@{/profiles/{id}/pics(id=${account.username})}"><span>My pictures</span></a>
 
             <div class="card">
                 <div class="card-body">
@@ -23,30 +23,48 @@
                         <div class="col"> Nothing here yet.</div>
                         <div class="col"></div>
                         <div class="col">
-                            <ul>
-                                People you follow:
-                            </ul>
-                            <ul th:if="${#lists.isEmpty(account.following)}">
-                                You are not following anyone.
-                            </ul>
-                            <ul>
-                                <li th:each="account : ${account.following}">
-                                    <a th:href="@{/profiles/{id}(id=${account.username})}"><span th:text="${account.name}">name</span></a>
-                                </li>
-                            </ul>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>
+                                        People you follow:
+                                    </h4>
+                                    <ul th:if="${#lists.isEmpty(account.following)}">
+                                        You are not following anyone.
+                                    </ul>
+                                    <ul>
+                                        <li th:each="account : ${account.following}">
+                                            <a th:href="@{/profiles/{id}(id=${account.username})}"><span th:text="${account.name}">name</span></a>
+                                        </li>
+                                    </ul>
 
-                            <ul>
-                                Followers:
-                            </ul>
-                            <ul th:if="${#lists.isEmpty(account.followers)}">
-                                You have no followers.
-                            </ul>
-                            <ul>
-                                <li th:each="account : ${account.followers}">
-                                    <a th:href="@{/profiles/{id}(id=${account.username})}"><span th:text="${account.name}">name</span></a>
-                                </li>
-                            </ul>
+                                    <h4>
+                                        Followers:
+                                    </h4>
+                                    <ul th:if="${#lists.isEmpty(account.followers)}">
+                                        You have no followers.
+                                    </ul>
+                                    <ul>
+                                        <li th:each="account : ${account.followers}">
+                                            <a th:href="@{/profiles/{id}(id=${account.username})}"><span th:text="${account.name}">name</span></a>
+                                        </li>
+                                    </ul>
+                                </div></div>
 
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>Add new picture</h4>
+
+                                    <form method="POST" th:action="@{/profiles/{username}/pics(username=${account.username})}" enctype="multipart/form-data">
+                                        <div> <input type="checkbox" id="icon" name="icon"/>
+                                              <input type="hidden" name="icon" value="false"/>
+                                                <label for="icon">Set as profile picture</label>
+                                                <input type="file" name="file" id="file"/>
+                                                <input type="submit" value="Add!"/>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
 
                         </div>
                     </div>

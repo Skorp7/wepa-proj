@@ -46,6 +46,8 @@ public class ProfileController {
         return "redirect:/profiles/" + username;
     }
     
+
+    
     
     @GetMapping("/seek")
     public String seek(Model model) {

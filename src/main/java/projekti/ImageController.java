@@ -8,6 +8,8 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,38 +20,45 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class ImageController {
     @Autowired
-    private ImageRepository imageRepository;
-
-    @GetMapping("{profilename}/images")
-    public String redirect(@PathVariable String profilename) {
-        return "redirect:" + profilename + "/images/1";
-    }
-
-    @PostMapping("{profilename}/images")
-    public String imageIn(@RequestParam("file") MultipartFile file, @PathVariable String profilename) throws IOException {
-        if (file.getContentType().contains("image")) {
-            Image img = new Image();
-            img.setContent(file.getBytes());
-            img.setOwner(profilename);
-            imageRepository.save(img);
-        }
-        System.out.println("contentTYPE" + file.getContentType());
-        return "redirect:" + profilename + "/images";
-    }
-
+    private ImageService imgServ;
     
-    @GetMapping("{profilename}/images/{id}")
-    public String gifsid(Model model, @PathVariable Long id, @PathVariable String profilename) {
-    model.addAttribute("count", imageRepository.count());
-    if (imageRepository.existsById(id)) model.addAttribute("current", id);
-    if (imageRepository.existsById(id+1)) model.addAttribute("next", (id + 1));
-    if (imageRepository.existsById(id-1)) model.addAttribute("previous", (id - 1));
-        return "images";
+    @Autowired
+    private ProfileService profServ;
+    
+    @GetMapping("/profiles/{username}/pics")
+    public String profilesImg(@PathVariable String username, Model model) {
+        model.addAttribute("images", imgServ.getImagesByUsername(username));
+        model.addAttribute("account", profServ.getAccountByUsername(username));
+        return "pics";
     }
 
-    @GetMapping(path = "{profilename}/images/{id}/content", produces = "image/png")
+    @PostMapping("/profiles/{username}/pics")
+    public String imageIn(@RequestParam("file") MultipartFile file, 
+            @RequestParam boolean icon,
+            @PathVariable String username) throws IOException {
+        imgServ.addImage(file, username, icon);
+        return "redirect:/profiles/" + username + "/pics";
+    }
+    
+    @GetMapping(path = "/profiles/{username}/pics/{id}/content", produces = "image/png")
     @ResponseBody
     public byte[] get(@PathVariable Long id) {
-        return imageRepository.getOne(id).getContent();        
+        return imgServ.getContentById(id);       
     }
+
+//        @GetMapping("{profilename}/images")
+//    public String redirect(@PathVariable String profilename) {
+//        return "redirect:" + profilename + "/images/1";
+//    }
+//
+//    @GetMapping("{profilename}/images/{id}")
+//    public String gifsid(Model model, @PathVariable Long id, @PathVariable String profilename) {
+//    model.addAttribute("count", imageRepository.count());
+//    if (imageRepository.existsById(id)) model.addAttribute("current", id);
+//    if (imageRepository.existsById(id+1)) model.addAttribute("next", (id + 1));
+//    if (imageRepository.existsById(id-1)) model.addAttribute("previous", (id - 1));
+//        return "images";
+//    }
+//
+
 }

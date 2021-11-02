@@ -5,6 +5,8 @@
  */
 package projekti;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,6 +53,9 @@ public class Account extends AbstractPersistable<Long>{
             inverseJoinColumns = @JoinColumn(name = "followingId")
     )
     private Set<Account> followers;
+    
+    @OneToMany(mappedBy = "account")
+    private List<Image> images = new ArrayList<>();
     
     @Override
     public int hashCode() {

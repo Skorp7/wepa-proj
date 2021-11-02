@@ -11,13 +11,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta charset="UTF-8" />
 
-        <title>My wall</title>
+        <title th:text="@{{username}'s wall(username=${account.name})}">Wall</title>
     </head>
     <body>
         <div class="container">
             <div th:replace="fragments/layout :: navi"></div>
         </div>
-        <div class="container"><span th:text="${account.name}">name</span>'s wall
+        <div class="container"><span th:text="${account.name}">name</span>'s wall <a th:href="@{/profiles/{id}/pics(id=${account.username})}"><span th:text="${account.name}">name</span>'s pictures</a>
 
             <div class="card">
                 <div class="card-body">

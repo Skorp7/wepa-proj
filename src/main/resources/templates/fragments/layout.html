@@ -42,14 +42,6 @@
         
         
         <div th:fragment="messageCenter" class="card">
-            <form th:action="@{/messages}" method="POST">
-                Write on the wall:
-                <input name="message"/> 
-                <input type="hidden" th:if="${#strings.contains(#httpServletRequest.requestURI, 'profiles')}" name="fromSite" value="public"/>
-                <input type="hidden" th:unless="${#strings.contains(#httpServletRequest.requestURI, 'profiles')}" name="fromSite" value="own"/>
-                <input type="hidden" name="username" th:value="${account.username}"/><button type="submit">Send</button>
-            </form> 
-
             <div class="card-body">
                 <ul>
                     <li th:each="message : ${messages}">

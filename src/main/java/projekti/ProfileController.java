@@ -35,7 +35,7 @@ public class ProfileController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account acc = profServ.getAccountByUsername(auth.getName());
         Image icon = imgServ.getIconByUsername(auth.getName());
-        List<Message> messages = msgServ.getMessagesByAccount(acc);
+        List<Message> messages = msgServ.getOwnAndFollowingMessagesByAccount(acc);
         model.addAttribute("account", acc);
         model.addAttribute("messages", messages);
         model.addAttribute("icon", icon);
@@ -46,7 +46,7 @@ public class ProfileController {
     public String profiles(@PathVariable String username, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account acc = profServ.getAccountByUsername(username);
-        List<Message> messages = msgServ.getMessagesByAccount(acc);
+        List<Message> messages = msgServ.getOwnMessagesByAccount(acc);
         Image icon = imgServ.getIconByUsername(username);
         boolean isFollower = false;
         if (acc.getFollowers().stream().anyMatch(a -> a.getUsername().equals(auth.getName()))) {

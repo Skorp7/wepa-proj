@@ -6,7 +6,19 @@ body {
     font-family: 'Arial';
 }
 
-li { list-style: none; }
+li { 
+    list-style: none; 
+}
+.headers {
+    font-family: 'Courier';
+    color: rgb(51, 48, 48);
+    text-shadow:0px 1px 0px #86ae47;
+    background: #ffffff;
+    font-weight: bold;
+    padding: 1em 1em;
+    font-size: 1.5em;
+    border-radius: .5em;
+}
 
 .header {
     border: 2px solid #28b463;
@@ -36,7 +48,7 @@ li { list-style: none; }
 .navbar {
     background-color: rgba(156, 140, 120, 0.61);
     display: block;
-    padding: 5px;
+    padding: 2px;
     border-radius: .5em;
 }
 
@@ -168,43 +180,6 @@ span {
 	top:1px;
 }
 
-.tooltip {
-    position: relative;
-    display: inline-block;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 250px;
-    background-color: rgba(59, 59, 59, 0.815);
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-}
-
-.tooltip-left {
-    top: -5px;
-    right: 105%;  
- }
-
-.tooltip-right {
-    top: -5px;
-    left: 105%
- }
-
-.tooltip-top {
-    width: 120px;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -120px;
-}
 
 input[name=search] {
     width: 130px;

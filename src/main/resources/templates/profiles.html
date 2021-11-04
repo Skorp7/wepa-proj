@@ -23,9 +23,12 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-
+                            <div th:if="${isFollower or isOwner}">
                             <div th:replace="fragments/layout :: messageCenter"></div>
-
+                            </div>
+                            <div th:unless="${isFollower or isOwner}">
+                                Start to follow to see the wall.
+                            </div>
                         </div>
                         
                         <div class="col"></div>

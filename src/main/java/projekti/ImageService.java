@@ -31,7 +31,7 @@ public class ImageService {
     
     public boolean addImage(MultipartFile file, String username, boolean icon, String text) throws IOException {
         Account acc = accRepo.findByUsername(username);
-        if (getImagesByAccount(acc).size() > 9) {
+        if (getImageCount(acc) > 9) {
             return false;
         }
         if (file.getContentType().contains("image")) {
@@ -63,6 +63,10 @@ public class ImageService {
     public Image getIconByUsername(String username) {
         Account acc = accRepo.findByUsername(username);
         return imgRepo.findByAccountAndIcon(acc, true);
+    }
+    
+    public int getImageCount(Account acc) {
+        return getImagesByAccount(acc).size();
     }
     
     public List<Image> getImagesByAccount(Account acc) {

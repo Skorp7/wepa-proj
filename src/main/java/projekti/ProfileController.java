@@ -34,11 +34,10 @@ public class ProfileController {
     public String profile(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account acc = profServ.getAccountByUsername(auth.getName());
-        Image icon = imgServ.getIconByUsername(auth.getName());
-        List<Message> messages = msgServ.getOwnAndFollowingMessagesByAccount(acc);
         model.addAttribute("account", acc);
-        model.addAttribute("messages", messages);
-        model.addAttribute("icon", icon);
+        model.addAttribute("messages", msgServ.getOwnAndFollowingMessagesByAccount(acc));
+        model.addAttribute("icon", imgServ.getIconByUsername(auth.getName()));
+        model.addAttribute("imageCount", imgServ.getImageCount(acc));
         return "profile";
     }
     
@@ -46,16 +45,11 @@ public class ProfileController {
     public String profiles(@PathVariable String username, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account acc = profServ.getAccountByUsername(username);
-        List<Message> messages = msgServ.getOwnMessagesByAccount(acc);
-        Image icon = imgServ.getIconByUsername(username);
-        boolean isFollower = false;
-        if (acc.getFollowers().stream().anyMatch(a -> a.getUsername().equals(auth.getName()))) {
-            isFollower = true;
-        }
         model.addAttribute("account", acc);
-        model.addAttribute("isFollower", isFollower);
-        model.addAttribute("messages", messages);
-        model.addAttribute("icon", icon);
+        model.addAttribute("isFollower", profServ.isFollowerTo(username, auth.getName()));
+        model.addAttribute("isOwner", auth.getName().equals(username));
+        model.addAttribute("messages", msgServ.getOwnMessagesByAccount(acc));
+        model.addAttribute("icon", imgServ.getIconByUsername(username));
         return "profiles";
     }
     

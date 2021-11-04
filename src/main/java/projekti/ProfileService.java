@@ -51,6 +51,11 @@ public class ProfileService {
         return true;
     }
     
+    public boolean isFollowerTo(String username, String follower) {
+        Account acc = accRepo.findByUsername(username);
+        return acc.getFollowers().stream().anyMatch(a -> a.getUsername().equals(follower));
+    }
+    
     public Integer getFollowerCount(Account acc) {
         if (acc == null) return -99;
         Set<Account> followers = acc.getFollowers();
@@ -62,7 +67,6 @@ public class ProfileService {
         Account acc = accRepo.findByUsername(username);
         return acc;
     }
-    
     
     public List<Account> getAccountsByNameContaining(String word) {
         return accRepo.findByNameIgnoreCaseContaining(word);

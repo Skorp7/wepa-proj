@@ -23,11 +23,14 @@
                     Pictures:
                 </ul>
                 
-                <ul th:if="${#lists.isEmpty(images)}">
+                <ul th:if="${#lists.isEmpty(images) and (isFollower or isOwner)}">
                     No pictures yet.
                 </ul>
                 
-                <ul th:each="img : ${images}">
+                <ul th:if="${isFollower or isOwner}" th:each="img : ${images}">
+                    <li th:if="${#lists.isEmpty(images)}">
+                        
+                    </li>
                     <li>
                         <img th:src="@{/profiles/{username}/pics/{id}/content(username=${account.username}, id=${img.id})}" th:alt="${img.text}"/>
                         <br/>
@@ -38,6 +41,10 @@
                         </form>
                     </li>
                     <li>&nbsp;</li>
+                </ul>
+                
+                <ul th:unless="${isFollower or isOwner}">
+                    Start to follow to see pictures.
                 </ul>
             </div>
         </div>

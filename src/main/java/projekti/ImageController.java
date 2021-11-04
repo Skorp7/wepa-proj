@@ -33,14 +33,11 @@ public class ImageController {
     @GetMapping("/profiles/{username}/pics")
     public String profilesImgs(@PathVariable String username, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        boolean isOwner = false;
-        if (auth.getName().equals(username)) {
-            isOwner = true;
-        }
         Account acc = profServ.getAccountByUsername(username);
         model.addAttribute("images", imgServ.getImagesByAccount(acc));
         model.addAttribute("account", acc);
-        model.addAttribute("isOwner", isOwner);
+        model.addAttribute("isOwner", auth.getName().equals(username));
+        model.addAttribute("isFollower", profServ.isFollowerTo(username, auth.getName()));
         return "pics";
     }
     

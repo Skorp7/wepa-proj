@@ -29,21 +29,28 @@ public class ImageService {
     @Autowired
     AccountRepository accRepo;
     
-    public boolean addImage(MultipartFile file, String username, boolean icon) throws IOException {
+    public boolean addImage(MultipartFile file, String username, boolean icon, String text) throws IOException {
+        Account acc = accRepo.findByUsername(username);
+        if (getImagesByAccount(acc).size() > 9) {
+            return false;
+        }
         if (file.getContentType().contains("image")) {
             if (icon && iconExists(username)) {
                 Image old_icon = getIconByUsername(username);
                 old_icon.setIcon(false);
                 imgRepo.save(old_icon);
             }
-            Account acc = accRepo.findByUsername(username);
-            Image img = new Image(file.getBytes(), acc, icon);
+            Image img = new Image(file.getBytes(), acc, icon, text);
             imgRepo.save(img);
             return true;
         } else {
             return false;
         }
     } 
+    
+    public void delImage(Long id) {
+        imgRepo.deleteById(id);
+    }
     
     public byte[] getContentById(Long id) {
         return imgRepo.getOne(id).getContent();        

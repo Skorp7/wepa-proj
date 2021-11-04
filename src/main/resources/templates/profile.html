@@ -69,6 +69,7 @@
                                     <h4>Add new picture</h4>
 
                                     <form method="POST" th:action="@{/profiles/{username}/pics(username=${account.username})}" enctype="multipart/form-data">
+                                        <input type="text" name="text" placeholder="Description"/>
                                         <div> <input type="checkbox" id="icon" name="icon"/>
                                             <input type="hidden" name="icon" value="false"/>
                                             <label for="icon">Set as profile picture</label>

@@ -10,6 +10,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     List<Message> findByAccounttoAndUsernamefrom(Account accountto, String usernamefrom, Pageable pageable);
 
+    //This query finds 25 newest messages of an account and messages from people she/he is following to
     @Query(value = "SELECT * FROM MESSAGE WHERE (ID IN (SELECT ID FROM MESSAGE LEFT JOIN FOLLOWING ON (USERNAME = ACCOUNT_ID) "
             + "WHERE FOLLOWING_ID = ?1 ORDER BY DATETIME DESC LIMIT 25))\n"
             + "UNION\n"

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,37 +30,32 @@ public class ImageController {
     @Autowired
     private ProfileService profServ;
     
-    @Autowired
-    private ImageRepository imgRepo;
-    
     @GetMapping("/profiles/{username}/pics")
-    public String profilesImg(@PathVariable String username, Model model) {
+    public String profilesImgs(@PathVariable String username, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isOwner = false;
+        if (auth.getName().equals(username)) {
+            isOwner = true;
+        }
         Account acc = profServ.getAccountByUsername(username);
         model.addAttribute("images", imgServ.getImagesByAccount(acc));
         model.addAttribute("account", acc);
+        model.addAttribute("isOwner", isOwner);
         return "pics";
     }
-
-//    @GetMapping("/profiles/{username}/pics")
-//    public String profilesImg(@PathVariable String username, Model model) {
-//        Account acc = profServ.getAccountByUsername(username);
-//        List<Image> lista = imgRepo.findAll();
-//        ArrayList<Image> filter = new ArrayList<>();
-//        for (Image img : lista) {
-//            if (img.getAccount().getUsername().equals(acc.getUsername())) {
-//                filter.add(img);
-//            }
-//        }
-//        model.addAttribute("account", acc);
-//        model.addAttribute("images", lista);
-//        return "pics";
-//    }
     
     @PostMapping("/profiles/{username}/pics")
     public String imageIn(@RequestParam("file") MultipartFile file, 
             @RequestParam boolean icon,
+            @RequestParam String text,
             @PathVariable String username) throws IOException {
-        imgServ.addImage(file, username, icon);
+        imgServ.addImage(file, username, icon, text);
+        return "redirect:/profiles/" + username + "/pics";
+    }
+    
+    @PostMapping("/profiles/{username}/delpic")
+    public String imageDel(@RequestParam Long id, @PathVariable String username) {
+        imgServ.delImage(id);
         return "redirect:/profiles/" + username + "/pics";
     }
     
@@ -67,34 +64,5 @@ public class ImageController {
     public byte[] get(@PathVariable Long id) {
         return imgServ.getContentById(id);       
     }
-//    
-//    @GetMapping(path = "/conts" )
-//    @ResponseBody
-//    public String getConts() {
-//        Account acc = profServ.getAccountByUsername("pil");
-//        List<Image> lista = imgRepo.findAll();
-//        ArrayList<Image> filter = new ArrayList<>();
-//        for (Image img : lista) {
-//            if (img.getAccount().getUsername().equals(acc.getUsername())) {
-//                filter.add(img);
-//            }
-//        }
-//        return filter.toString();
-//    }
-
-//        @GetMapping("{profilename}/images")
-//    public String redirect(@PathVariable String profilename) {
-//        return "redirect:" + profilename + "/images/1";
-//    }
-//
-//    @GetMapping("{profilename}/images/{id}")
-//    public String gifsid(Model model, @PathVariable Long id, @PathVariable String profilename) {
-//    model.addAttribute("count", imageRepository.count());
-//    if (imageRepository.existsById(id)) model.addAttribute("current", id);
-//    if (imageRepository.existsById(id+1)) model.addAttribute("next", (id + 1));
-//    if (imageRepository.existsById(id-1)) model.addAttribute("previous", (id - 1));
-//        return "images";
-//    }
-//
 
 }

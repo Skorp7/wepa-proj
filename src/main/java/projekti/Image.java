@@ -28,5 +28,7 @@ public class Image extends AbstractPersistable<Long> {
     private Account account;
     
     private boolean icon;
+    
+    private String text;
 
 }

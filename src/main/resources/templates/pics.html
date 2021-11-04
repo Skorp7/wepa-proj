@@ -27,10 +27,17 @@
                     No pictures yet.
                 </ul>
                 
-                <ul>
-                    <li th:each="img : ${images}">
-                        <img th:src="@{/profiles/{username}/pics/{id}/content(username=${account.username}, id=${img.id})}"/>
+                <ul th:each="img : ${images}">
+                    <li>
+                        <img th:src="@{/profiles/{username}/pics/{id}/content(username=${account.username}, id=${img.id})}" th:alt="${img.text}"/>
+                        <br/>
+                        <small th:text="${img.text}">description</small>
+                        <form th:if="${isOwner}" th:action="@{/profiles/{username}/delpic(username=${account.username})}" method="post">
+                            <input type="hidden" th:value="${img.id}" name="id"/>
+                            <button class="btn btn-outline-danger btn-sm" type="submit">Delete</button>
+                        </form>
                     </li>
+                    <li>&nbsp;</li>
                 </ul>
             </div>
         </div>

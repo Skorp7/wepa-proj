@@ -20,7 +20,7 @@
                 <div class="card-body">
                     <form th:action="@{/seek}" method="post">
                         <input type="text" name="word"/>
-                        <button type="submit">Submit</button>
+                        <button class="btn btn-light btn-sm" type="submit">Submit</button>
                     </form>
                 </div>
                 <ul th:if="${#lists.isEmpty(accounts)}">

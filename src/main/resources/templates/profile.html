@@ -27,7 +27,8 @@
                                 <input name="message"/> 
                                 <input type="hidden" th:if="${#strings.contains(#httpServletRequest.requestURI, 'profiles')}" name="fromSite" value="public"/>
                                 <input type="hidden" th:unless="${#strings.contains(#httpServletRequest.requestURI, 'profiles')}" name="fromSite" value="own"/>
-                                <input type="hidden" name="username" th:value="${account.username}"/><button type="submit">Send</button>
+                                <input type="hidden" name="username" th:value="${account.username}"/>
+                                <button class="btn btn-light btn-sm" type="submit">Send</button>
                             </form> 
                             <div th:replace="fragments/layout :: messageCenter"></div>
                         </div>

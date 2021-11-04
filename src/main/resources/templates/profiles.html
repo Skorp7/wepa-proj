@@ -5,8 +5,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-        <!--        <link rel="stylesheet" th:href="${pageContext.request.contextPath}/resources/public/custom.css" />-->
-        <!--        <link rel="stylesheet" th:href="@{/public/custom.css}" href="/public/custom.css"/> -->
         <link rel="stylesheet" href="/custom.css"/> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta charset="UTF-8" />
@@ -43,8 +41,14 @@
                                     <form action="/profiles" method="post">
                                         <input type="hidden" name="username" th:value="${account.username}"/>
                                         <input type="hidden" name="isFollower" th:value="${isFollower}"/>
-                                        <button th:if="${isFollower}" type="submit">Stop to follow</button>
-                                        <button th:unless="${isFollower}" type="submit">Follow</button>
+                                        <button th:if="${isFollower}" class="btn btn-light btn-sm" type="submit">Stop to follow</button>
+                                        <button th:unless="${isFollower}" class="btn btn-light btn-sm" type="submit">Follow</button>
+                                    </form>
+                                    <form action="/profiles/block" method="post">
+                                        <input type="hidden" name="username" th:value="${account.username}"/>
+                                        <input type="hidden" name="isBlocked" th:value="${isBlocked}"/>
+                                        <button th:if="${isBlocked}" class="btn btn-outline-danger btn-sm" type="submit">Stop to block</button>
+                                        <button th:unless="${isBlocked}" class="btn btn-outline-danger btn-sm" type="submit">Block</button>
                                     </form>
                                 </div>
                             </div>

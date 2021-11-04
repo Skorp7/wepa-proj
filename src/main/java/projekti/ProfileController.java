@@ -48,6 +48,7 @@ public class ProfileController {
         model.addAttribute("account", acc);
         model.addAttribute("isFollower", profServ.isFollowerTo(username, auth.getName()));
         model.addAttribute("isOwner", auth.getName().equals(username));
+        model.addAttribute("isBlocked", profServ.isInBlacklist(acc,profServ.getAccountByUsername(auth.getName())));
         model.addAttribute("messages", msgServ.getOwnMessagesByAccount(acc));
         model.addAttribute("icon", imgServ.getIconByUsername(username));
         return "profiles";
@@ -66,16 +67,28 @@ public class ProfileController {
         return "redirect:/profiles/" + username;
     }
     
+    @PostMapping("/profiles/block")
+    public String profilesBlockOrNot(@RequestParam String username, @RequestParam boolean isBlocked) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Account acc = profServ.getAccountByUsername(auth.getName());
+        Account accountToList = profServ.getAccountByUsername(username);
+        if (isBlocked) {
+            profServ.removeFromBlacklist(accountToList, acc);
+        } else {
+            profServ.addToBlacklist(accountToList, acc);
+        }
+        return "redirect:/profiles/" + username;
+    }
+    
     @PostMapping("/messages")
     public String profilesAddMsg(@RequestParam String username, 
-            @RequestParam String message, 
-            @RequestParam String fromSite) {
+            @RequestParam String message) {
+        if (message.length() < 1) {
+            return "redirect:/profile";
+        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account accTo = profServ.getAccountByUsername(username);
         msgServ.addMessage(message, accTo, auth.getName());
-        if (fromSite.equals("public")) {
-            return "redirect:/profiles/" + username;
-        }
         return "redirect:/profile";
     }
     

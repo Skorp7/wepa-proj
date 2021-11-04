@@ -61,6 +61,13 @@ public class Account extends AbstractPersistable<Long>{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accountto")
     private List<Message> messages = new ArrayList<>();
     
+    @ManyToMany
+    @JoinTable(name = "blacklist",
+            joinColumns = @JoinColumn(name = "accountId"),
+            inverseJoinColumns = @JoinColumn(name = "blockedId")
+    )
+    private Set<Account> blacklist;
+    
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());

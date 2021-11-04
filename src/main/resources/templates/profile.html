@@ -1,10 +1,7 @@
-
-
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-        <!--        <link rel="stylesheet" th:href="@{/public/custom.css}"/>  -->
         <link rel="stylesheet" href="custom.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta charset="UTF-8" />
@@ -33,55 +30,57 @@
                             <div th:replace="fragments/layout :: messageCenter"></div>
                         </div>
 
-                        <div class="col"></div>
                         <div class="col">
+                            <div class="row">
+                                <div class="col"></div>
+                                <div class="col">
+                                    <div th:replace="fragments/layout :: profileBox"></div>
 
-                            <div th:replace="fragments/layout :: profileBox"></div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4>
+                                                People you follow:
+                                            </h4>
+                                            <ul th:if="${#lists.isEmpty(account.following)}">
+                                                You are not following anyone.
+                                            </ul>
+                                            <ul>
+                                                <li th:each="account : ${account.following}">
+                                                    <a th:href="@{/profiles/{id}(id=${account.username})}"><span th:text="${account.name}">name</span></a>
+                                                </li>
+                                            </ul>
 
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4>
-                                        People you follow:
-                                    </h4>
-                                    <ul th:if="${#lists.isEmpty(account.following)}">
-                                        You are not following anyone.
-                                    </ul>
-                                    <ul>
-                                        <li th:each="account : ${account.following}">
-                                            <a th:href="@{/profiles/{id}(id=${account.username})}"><span th:text="${account.name}">name</span></a>
-                                        </li>
-                                    </ul>
+                                            <h4>
+                                                Followers:
+                                            </h4>
+                                            <ul th:if="${#lists.isEmpty(account.followers)}">
+                                                You have no followers.
+                                            </ul>
+                                            <ul>
+                                                <li th:each="account : ${account.followers}">
+                                                    <a th:href="@{/profiles/{id}(id=${account.username})}"><span th:text="${account.name}">name</span></a>
+                                                </li>
+                                            </ul>
+                                        </div></div>
 
-                                    <h4>
-                                        Followers:
-                                    </h4>
-                                    <ul th:if="${#lists.isEmpty(account.followers)}">
-                                        You have no followers.
-                                    </ul>
-                                    <ul>
-                                        <li th:each="account : ${account.followers}">
-                                            <a th:href="@{/profiles/{id}(id=${account.username})}"><span th:text="${account.name}">name</span></a>
-                                        </li>
-                                    </ul>
-                                </div></div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4>Add new picture</h4>
 
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4>Add new picture</h4>
-
-                                    <form method="POST" th:action="@{/profiles/{username}/pics(username=${account.username})}" enctype="multipart/form-data">
-                                        <input type="text" name="text" placeholder="Description"/>
-                                        <div> <input type="checkbox" id="icon" name="icon"/>
-                                            <input type="hidden" name="icon" value="false"/>
-                                            <label for="icon">Set as profile picture</label>
-                                            <input type="file" name="file" id="file"/>
-                                            <input type="submit" value="Add!"/>
+                                            <form method="POST" th:action="@{/profiles/{username}/pics(username=${account.username})}" enctype="multipart/form-data">
+                                                <input type="text" name="text" placeholder="Description"/>
+                                                <div> <input type="checkbox" id="icon" name="icon"/>
+                                                    <input type="hidden" name="icon" value="false"/>
+                                                    <label for="icon">Set as profile picture</label>
+                                                    <input type="file" name="file" id="file"/>
+                                                    <input type="submit" value="Add!"/>
+                                                </div>
+                                            </form>
+                                            <small>You have </small><small th:text="${imageCount}">count</small><small>/10 pictures.</small>
                                         </div>
-                                    </form>
-                                    <small>You have </small><small th:text="${imageCount}">count</small><small>/10 pictures.</small>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

@@ -7,10 +7,8 @@
 
         <title>Hello world</title>
     </head>
-
     <body>
-            <div class="container">
-
+        <div class="container">
             <nav th:fragment="navi" class="navbar navbar-expand-sm navbar-light">
                 <a class="navbar-brand" href="#"></a>
                 <ul class="navbar-nav">
@@ -37,13 +35,14 @@
                     </li>
                 </ul>
             </nav>
-       
-            </div>
-        
-        
+        </div>
+
         <div th:fragment="messageCenter" class="card">
             <div class="card-body">
                 <ul>
+                    <li th:if="${#lists.isEmpty(messages)}">
+                        No messages yet.
+                    </li>
                     <li th:each="message : ${messages}">
                         <small th:text="${{message.datetime}}">date</small> - <a th:href="@{/profiles/{id}(id=${message.usernamefrom})}"><small th:text="${{message.usernamefrom}}">name</small></a>
                         <p th:text="${message.message}">msg</p> 

@@ -8,10 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author sakorpi
- */
 @Service
 public class ProfileService {
 
@@ -24,10 +20,9 @@ public class ProfileService {
     }
 
     public boolean isInBlacklist(Account accIsInList, Account listing) {
-        System.out.println(accIsInList.getName() + ":n blacklist: " + accIsInList.getBlacklist());
         return listing.getBlacklist().stream().anyMatch(a -> a.equals(accIsInList));
     }
-    
+
     public void addToBlacklist(Account accountToList, Account listing) {
         Set<Account> blacklist = listing.getBlacklist();
         blacklist.add(accountToList);
@@ -36,7 +31,7 @@ public class ProfileService {
         removeFollowerFrom(accountToList, listing);
         accRepo.save(listing);
     }
-    
+
     public void removeFromBlacklist(Account accountToFree, Account listing) {
         Set<Account> blacklist = listing.getBlacklist();
         blacklist.remove(accountToFree);

@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
     <head>
@@ -8,57 +5,71 @@
         <link rel="stylesheet" href="/custom.css"/> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta charset="UTF-8" />
-
         <title th:text="@{{username}'s wall(username=${account.name})}">Wall</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </head>
     <body>
         <div class="container">
             <div th:replace="fragments/layout :: navi"></div>
         </div>
 
-        <div class="container"><span th:text="${account.name}">name</span>'s wall <a th:href="@{/profiles/{id}/pics(id=${account.username})}"><span th:text="${account.name}">name</span>'s pictures</a>
+        <div class="container"><span th:text="${account.name}">name</span>'s wall 
+            <a th:href="@{/profiles/{id}/pics(id=${account.username})}">
+                <span th:text="${account.name}">name</span>'s pictures</a>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
                             <div th:if="${isFollower or isOwner}">
-                            <div th:replace="fragments/layout :: messageCenter"></div>
+                                <div th:replace="fragments/layout :: messageCenter"></div>
                             </div>
                             <div th:unless="${isFollower or isOwner}">
                                 Start to follow to see the wall.
                             </div>
                         </div>
-                        
-                        <div class="col"></div>
-                       
-                        <div class="col">
 
+                        <div class="col">
+                            <div class="row">
+                            <div class="col"></div>
+                            <div class="col">
                             <div th:replace="fragments/layout :: profileBox"></div>
 
                             <div class="card">
                                 <div class="card-body">
                                     Has <span class="span-small" th:text="${#sets.size(account.followers)}">count</span> followers.
-                                    <form action="/profiles" method="post">
-                                        <input type="hidden" name="username" th:value="${account.username}"/>
-                                        <input type="hidden" name="isFollower" th:value="${isFollower}"/>
-                                        <button th:if="${isFollower}" class="btn btn-light btn-sm" type="submit">Stop to follow</button>
-                                        <button th:unless="${isFollower}" class="btn btn-light btn-sm" type="submit">Follow</button>
-                                    </form>
-                                    <form action="/profiles/block" method="post">
-                                        <input type="hidden" name="username" th:value="${account.username}"/>
-                                        <input type="hidden" name="isBlocked" th:value="${isBlocked}"/>
-                                        <button th:if="${isBlocked}" class="btn btn-outline-danger btn-sm" type="submit">Stop to block</button>
-                                        <button th:unless="${isBlocked}" class="btn btn-outline-danger btn-sm" type="submit">Block</button>
-                                    </form>
+                                    <div th:unless="${isOwner}">
+                                        <form action="/profiles" method="post">
+                                            <input type="hidden" name="username" th:value="${account.username}"/>
+                                            <input type="hidden" name="isFollower" th:value="${isFollower}"/>
+                                            <button th:if="${isFollower}" class="btn btn-light btn-sm" type="submit">Stop to follow</button>
+                                            <button th:unless="${isFollower}" class="btn btn-light btn-sm" type="submit">Follow</button>
+                                        </form>
+                                        <form action="/profiles/block" method="post">
+                                            <input type="hidden" name="username" th:value="${account.username}"/>
+                                            <input type="hidden" name="isBlocked" th:value="${isBlocked}"/>
+                                            <button th:if="${isBlocked}" class="btn btn-outline-danger btn-sm" type="submit">Stop to block</button>
+                                            <button th:unless="${isBlocked}" class="btn btn-outline-danger btn-sm" type="submit" data-toggle="tooltip" 
+                                                    data-placement="bottom" title="If you block, you can't follow and you can't be followed.">Block</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
+                            <small th:if="${isOwner}">This is how your followers see your wall</small>
+                            </div>
+                            </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
+
+        <script>
+            $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();   
+            });
+        </script>
     </body>
 </html>
 

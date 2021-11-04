@@ -1,4 +1,3 @@
-
 package projekti;
 
 import java.util.Arrays;
@@ -10,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-
 public class CustonUserDetailService implements UserDetailsService {
 
     @Autowired
@@ -32,5 +30,5 @@ public class CustonUserDetailService implements UserDetailsService {
                 true,
                 Arrays.asList(new SimpleGrantedAuthority("USER")));
     }
-    
+
 }

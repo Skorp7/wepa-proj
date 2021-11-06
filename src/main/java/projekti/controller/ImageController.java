@@ -53,8 +53,16 @@ public class ImageController {
 
     @GetMapping(path = "/profiles/{username}/pics/{id}/content", produces = "image/jpg")
     @ResponseBody
-    public byte[] get(@PathVariable Long id) {
-        return imgServ.getContentById(id);
+    public byte[] get(@PathVariable String username, @PathVariable Long id) {
+        //check if image request is coming from an owner or follower
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isOwner = auth.getName().equals(username);
+        boolean isFollower = profServ.isFollowerTo(username, auth.getName());
+        if (isOwner || isFollower) {
+            return imgServ.getContentById(id);
+        }
+        byte[] errorBytes = {1,2};
+        return errorBytes;
     }
 
 }

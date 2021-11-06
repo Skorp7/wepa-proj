@@ -41,8 +41,8 @@ public class ImageService {
         imgRepo.deleteById(id);
     }
 
-    public byte[] getContentById(Long id) {
-        return imgRepo.getOne(id).getContent();
+    public Image getImageById(Long id) {
+        return imgRepo.getOne(id);
     }
 
     public boolean iconExists(String username) {

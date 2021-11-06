@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import projekti.domain.Image;
 
 @Controller
 public class ImageController {
@@ -58,8 +59,9 @@ public class ImageController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isOwner = auth.getName().equals(username);
         boolean isFollower = profServ.isFollowerTo(username, auth.getName());
-        if (isOwner || isFollower) {
-            return imgServ.getContentById(id);
+        Image img = imgServ.getImageById(id);
+        if ((isOwner || isFollower) || img.isIcon()) {
+            return img.getContent();
         }
         byte[] errorBytes = {1,2};
         return errorBytes;

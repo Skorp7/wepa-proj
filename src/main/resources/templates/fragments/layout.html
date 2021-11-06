@@ -44,7 +44,7 @@
                         No messages yet.
                     </li>
                     <li th:each="message : ${messages}">
-                        <small th:text="${{message.datetime}}">date</small> - <a th:href="@{/profiles/{id}(id=${message.usernamefrom})}"><small th:text="${{message.usernamefrom}}">name</small></a>
+                        <small th:text="${{message.datetime}}">date</small> - <a th:href="@{/profiles/{id}(id=${message.accountto.username})}"><small th:text="${{message.accountto.name}}">name</small></a>
                         <p th:text="${message.message}">msg</p> 
                     </li>
                 </ul>

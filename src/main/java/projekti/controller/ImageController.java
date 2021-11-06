@@ -1,5 +1,8 @@
-package projekti;
+package projekti.controller;
 
+import projekti.domain.Account;
+import projekti.domain.ProfileService;
+import projekti.domain.ImageService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

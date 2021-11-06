@@ -1,4 +1,4 @@
-package projekti;
+package projekti.domain;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
@@ -22,7 +22,5 @@ public class Message extends AbstractPersistable<Long> {
     @ManyToOne
     @JoinColumn(name = "username")
     private Account accountto;
-
-    private String usernamefrom;
-
+    
 }

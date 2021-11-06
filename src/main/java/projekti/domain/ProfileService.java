@@ -1,4 +1,4 @@
-package projekti;
+package projekti.domain;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import projekti.repository.AccountRepository;
 
 @Service
 public class ProfileService {
@@ -14,8 +15,12 @@ public class ProfileService {
     @Autowired
     AccountRepository accRepo;
 
-    public boolean addProfile(String username, String name, String pass) {
-        accRepo.save(new Account(username, name, pass, new HashSet<>(), new HashSet<>(), new ArrayList<>(), new ArrayList<>(), new HashSet<>()));
+    public boolean addProfile(String username, String name, String pass) throws Error{
+        try {
+            accRepo.save(new Account(username, name, pass, new HashSet<>(), new HashSet<>(), new ArrayList<>(), new ArrayList<>(), new HashSet<>()));
+        } catch (Exception e) {
+            return false;
+        }
         return true;
     }
 

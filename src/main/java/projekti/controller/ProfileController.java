@@ -1,5 +1,9 @@
-package projekti;
+package projekti.controller;
 
+import projekti.domain.MessageService;
+import projekti.domain.Account;
+import projekti.domain.ImageService;
+import projekti.domain.ProfileService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -76,14 +80,13 @@ public class ProfileController {
     }
 
     @PostMapping("/messages")
-    public String profilesAddMsg(@RequestParam String username,
-            @RequestParam String message) {
+    public String profilesAddMsg(@RequestParam String message) {
         if (message.length() < 1) {
             return "redirect:/profile";
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Account accTo = profServ.getAccountByUsername(username);
-        msgServ.addMessage(message, accTo, auth.getName());
+        Account accTo = profServ.getAccountByUsername(auth.getName());
+        msgServ.addMessage(message, accTo);
         return "redirect:/profile";
     }
 

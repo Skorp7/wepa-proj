@@ -1,5 +1,8 @@
-package projekti;
+package projekti.controller;
 
+import projekti.repository.AccountRepository;
+import projekti.domain.SecurityConfiguration;
+import projekti.domain.Account;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,9 +1,11 @@
 package projekti.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +24,8 @@ public class Message extends AbstractPersistable<Long> {
     @ManyToOne
     @JoinColumn(name = "username")
     private Account accountto;
+    
+    @OneToMany
+    List<Comment> comments;
     
 }

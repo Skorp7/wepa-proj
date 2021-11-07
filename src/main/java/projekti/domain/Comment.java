@@ -1,37 +1,28 @@
-
 package projekti.domain;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.AbstractPersistable;
-
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Image extends AbstractPersistable<Long> {
-
-    @Lob
-    @Type(type = "org.hibernate.type.BinaryType")
-    private byte[] content;
+public class Comment extends AbstractPersistable<Long> {
     
+    private LocalDateTime datetime = LocalDateTime.now();
+
+    private String comment;
+
     @ManyToOne
     @JoinColumn(name = "username")
     private Account account;
     
-    private boolean icon;
     
-    private String text;
-
-    @OneToMany
-    List<Comment> comments;
 }

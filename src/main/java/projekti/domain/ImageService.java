@@ -1,6 +1,7 @@
 package projekti.domain;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -33,12 +34,20 @@ public class ImageService {
                 old_icon.setIcon(false);
                 imgRepo.save(old_icon);
             }
-            Image img = new Image(file.getBytes(), acc, icon, text);
+            Image img = new Image(file.getBytes(), acc, icon, text, new ArrayList<>());
             imgRepo.save(img);
             return true;
         } else {
             return false;
         }
+    }
+    
+    @CacheEvict(cacheNames = "images", allEntries = true)
+    public void addCommentToImage(Long id, Comment comment) {
+        Image img = imgRepo.getOne(id);
+        List<Comment> commentList = img.getComments();
+        commentList.add(comment);
+        imgRepo.save(img);
     }
 
     @CacheEvict(cacheNames = "images", allEntries = true)

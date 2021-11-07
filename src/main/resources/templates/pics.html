@@ -24,17 +24,32 @@
                 </ul>
 
                 <ul th:if="${isFollower or isOwner}" th:each="img : ${images}">
-                    <li th:if="${#lists.isEmpty(images)}">
-
-                    </li>
                     <li>
-                        <img th:src="@{/profiles/{username}/pics/{id}/content(username=${account.username}, id=${img.id})}" th:alt="${img.text}"/>
-                        <br/>
-                        <small th:text="${img.text}">description</small>
-                        <form th:if="${isOwner}" th:action="@{/profiles/{username}/delpic(username=${account.username})}" method="post">
-                            <input type="hidden" th:value="${img.id}" name="id"/>
-                            <button class="btn btn-outline-danger btn-sm" type="submit">Delete</button>
-                        </form>
+                        <div class="card">
+                            <div class="card-body">
+                                <img th:src="@{/profiles/{username}/pics/{id}/content(username=${account.username}, id=${img.id})}" th:alt="${img.text}"/>
+                                <br/>
+                                <span class="span-small" th:text="${img.text}">description</span>
+                                <form th:if="${isOwner}" th:action="@{/profiles/{username}/delpic(username=${account.username})}" method="post">
+                                    <input type="hidden" th:value="${img.id}" name="id"/>
+                                    <button class="btn btn-outline-danger btn-sm" type="submit">Delete</button>
+                                </form>
+                                <div th:fragment="commentBox">
+
+                                    <ul th:unless="${#lists.isEmpty(img.comments)}" th:each="comm : ${#numbers.sequence(T(Math).max(0, img.comments.size()-10), img.comments.size()-1)}">
+                                        <li>
+                                        <small style="color:gray;" th:text="${{img.comments[comm].datetime}}">date</small> - <a th:href="@{/profiles/{username}(username=${img.comments[comm].account.username})}"><small th:text="${{img.comments[comm].account.name}}">name</small></a>
+                                        <p style="color:gray;font-size:15px;" th:text="${img.comments[comm].comment}">commenttext</p> 
+                                        </li>
+                                    </ul>
+
+                                    <form id="commentform" th:action="@{/profiles/{username}/pics/{id}(username=${account.username}, id=${img.id})}" method="POST">
+                                        <span class="span-small" style="color:gray;">Comment:</span>
+                                        <input id="commenttext" name="comment"/> 
+                                        <button class="btn btn-light btn-sm" type="submit">Send</button>
+                                    </form> 
+                                </div>
+                            </div></div>
                     </li>
                     <li>&nbsp;</li>
                 </ul>

@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import projekti.domain.MessageService;
 
 @Controller
 public class ImageController {
+    
+    @Autowired
+    private MessageService msgServ;
 
     @Autowired
     private ImageService imgServ;
@@ -47,6 +51,19 @@ public class ImageController {
             return "redirect:/profile";
         }
 
+    }
+    
+    @PostMapping("/profiles/{username}/pics/{id}")
+    public String commentImg(@RequestParam String comment,
+            @PathVariable String username,
+            @PathVariable Long id) {
+        if (comment.length() < 2 || comment.length() > 200) {
+            return "redirect:/profiles/" + username + "/pics";
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Account commenter = profServ.getAccountByUsername(auth.getName());
+        msgServ.addComment(comment, commenter, id, true);
+        return "redirect:/profiles/" + username + "/pics";
     }
 
     @PostMapping("/profiles/{username}/delpic")

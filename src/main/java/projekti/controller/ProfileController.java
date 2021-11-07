@@ -1,5 +1,9 @@
 package projekti.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import projekti.domain.MessageService;
 import projekti.domain.Account;
 import projekti.domain.ImageService;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import projekti.domain.Comment;
+import projekti.domain.Message;
 
 @Controller
 public class ProfileController {
@@ -33,8 +39,14 @@ public class ProfileController {
     public String profile(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account acc = profServ.getAccountByUsername(auth.getName());
+//        HashMap<Message, List<Comment>> messages = msgServ.getOwnAndFollowingMessagesByAccount(acc);
+//        //Make keys-list which helps to print messages in order.
+//        List<Message> keys = new ArrayList<>(messages.keySet());
+//        Collections.sort(keys, (Message a1, Message a2) -> a1.getDatetime().compareTo(a2.getDatetime()));
+//        Collections.reverse(keys);
         model.addAttribute("account", acc);
         model.addAttribute("messages", msgServ.getOwnAndFollowingMessagesByAccount(acc));
+//        model.addAttribute("keys", keys);
         model.addAttribute("icon", imgServ.getIconByUsername(auth.getName()));
         model.addAttribute("imageCount", imgServ.getImageCount(acc));
         return "profile";
@@ -44,11 +56,16 @@ public class ProfileController {
     public String profiles(@PathVariable String username, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account acc = profServ.getAccountByUsername(username);
+//        //Make keys-list which helps to print messages in order.
+//        List<Message> keys = new ArrayList<>(messages.keySet());
+//        Collections.sort(keys, (Message a1, Message a2) -> a1.getDatetime().compareTo(a2.getDatetime()));
+//        Collections.reverse(keys);
         model.addAttribute("account", acc);
         model.addAttribute("isFollower", profServ.isFollowerTo(acc, auth.getName()));
         model.addAttribute("isOwner", auth.getName().equals(username));
         model.addAttribute("isBlocked", profServ.isInBlacklist(acc, profServ.getAccountByUsername(auth.getName())));
         model.addAttribute("messages", msgServ.getOwnMessagesByAccount(acc));
+//        model.addAttribute("keys", keys);
         model.addAttribute("icon", imgServ.getIconByUsername(username));
         return "profiles";
     }
@@ -88,6 +105,19 @@ public class ProfileController {
         Account accTo = profServ.getAccountByUsername(auth.getName());
         msgServ.addMessage(message, accTo);
         return "redirect:/profile";
+    }
+    
+    @PostMapping("/profiles/{username}/{id}")
+    public String commentMsg(@RequestParam String comment,
+            @PathVariable String username,
+            @PathVariable Long id) {
+        if (comment.length() < 2 || comment.length() > 200) {
+            return "redirect:/profiles/" + username;
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Account commenter = profServ.getAccountByUsername(auth.getName());
+        msgServ.addComment(comment, commenter, id, false);
+        return "redirect:/profiles/" + username;
     }
 
     @GetMapping("/seek")

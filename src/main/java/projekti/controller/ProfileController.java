@@ -45,7 +45,7 @@ public class ProfileController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account acc = profServ.getAccountByUsername(username);
         model.addAttribute("account", acc);
-        model.addAttribute("isFollower", profServ.isFollowerTo(username, auth.getName()));
+        model.addAttribute("isFollower", profServ.isFollowerTo(acc, auth.getName()));
         model.addAttribute("isOwner", auth.getName().equals(username));
         model.addAttribute("isBlocked", profServ.isInBlacklist(acc, profServ.getAccountByUsername(auth.getName())));
         model.addAttribute("messages", msgServ.getOwnMessagesByAccount(acc));

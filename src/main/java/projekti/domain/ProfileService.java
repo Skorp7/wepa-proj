@@ -15,6 +15,7 @@ public class ProfileService {
     @Autowired
     AccountRepository accRepo;
 
+
     public boolean addProfile(String username, String name, String pass) throws Error{
         try {
             accRepo.save(new Account(username, name, pass, new HashSet<>(), new HashSet<>(), new ArrayList<>(), new ArrayList<>(), new HashSet<>()));
@@ -28,6 +29,7 @@ public class ProfileService {
         return listing.getBlacklist().stream().anyMatch(a -> a.equals(accIsInList));
     }
 
+
     public void addToBlacklist(Account accountToList, Account listing) {
         Set<Account> blacklist = listing.getBlacklist();
         blacklist.add(accountToList);
@@ -36,6 +38,7 @@ public class ProfileService {
         removeFollowerFrom(accountToList, listing);
         accRepo.save(listing);
     }
+    
 
     public void removeFromBlacklist(Account accountToFree, Account listing) {
         Set<Account> blacklist = listing.getBlacklist();
@@ -74,10 +77,11 @@ public class ProfileService {
         return true;
     }
 
-    public boolean isFollowerTo(String username, String follower) {
-        Account acc = accRepo.findByUsername(username);
+
+    public boolean isFollowerTo(Account acc, String follower) {
         return acc.getFollowers().stream().anyMatch(a -> a.getUsername().equals(follower));
     }
+
 
     public Integer getFollowerCount(Account acc) {
         if (acc == null) {
@@ -90,10 +94,12 @@ public class ProfileService {
         return followers.size();
     }
 
+
     public Account getAccountByUsername(String username) {
         Account acc = accRepo.findByUsername(username);
         return acc;
     }
+
 
     public List<Account> getAccountsByNameContaining(String word) {
         return accRepo.findByNameIgnoreCaseContaining(word);

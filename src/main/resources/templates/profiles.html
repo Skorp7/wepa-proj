@@ -40,13 +40,13 @@
                                 <div class="card-body">
                                     Has <span class="span-small" th:text="${#sets.size(account.followers)}">count</span> followers.
                                     <div th:unless="${isOwner}">
-                                        <form action="/profiles" method="post">
+                                        <form id="followform" action="/profiles" method="post">
                                             <input type="hidden" name="username" th:value="${account.username}"/>
                                             <input type="hidden" name="isFollower" th:value="${isFollower}"/>
                                             <button th:if="${isFollower}" class="btn btn-light btn-sm" type="submit">Stop to follow</button>
                                             <button th:unless="${isFollower}" class="btn btn-light btn-sm" type="submit">Follow</button>
                                         </form>
-                                        <form action="/profiles/block" method="post">
+                                        <form id="blockform" action="/profiles/block" method="post">
                                             <input type="hidden" name="username" th:value="${account.username}"/>
                                             <input type="hidden" name="isBlocked" th:value="${isBlocked}"/>
                                             <button th:if="${isBlocked}" class="btn btn-outline-danger btn-sm" type="submit">Stop to block</button>

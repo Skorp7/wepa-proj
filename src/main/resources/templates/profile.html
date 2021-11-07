@@ -19,9 +19,9 @@
                     <div class="row">
 
                         <div class="col"> 
-                            <form th:action="@{/messages}" method="POST">
+                            <form id="messageform" th:action="@{/messages}" method="POST">
                                 Write on the wall:
-                                <input name="message"/> 
+                                <input id="msgtext" name="message"/> 
                                 <button class="btn btn-light btn-sm" type="submit">Send</button>
                             </form> 
                             <div th:replace="fragments/layout :: messageCenter"></div>
@@ -64,13 +64,13 @@
                                         <div class="card-body">
                                             <h4>Add new picture</h4>
 
-                                            <form method="POST" th:action="@{/profiles/{username}/pics(username=${account.username})}" enctype="multipart/form-data">
+                                            <form id="imageform" method="POST" th:action="@{/profiles/{username}/pics(username=${account.username})}" enctype="multipart/form-data">
                                                 <input type="text" name="text" placeholder="Description"/>
                                                 <div> <input type="checkbox" id="icon" name="icon"/>
                                                     <input type="hidden" name="icon" value="false"/>
                                                     <label for="icon">Set as profile picture</label>
                                                     <input type="file" name="file" id="file"/>
-                                                    <input type="submit" value="Add!"/>
+                                                    <input form="imageform" type="submit" value="Add!"/>
                                                 </div>
                                             </form>
                                             <small>You have </small><small th:text="${imageCount}">count</small><small>/10 pictures.</small>

@@ -16,15 +16,15 @@
 
                     <form action="#" th:action="@{/registration}" th:object="${account}" method="post">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control"  th:field="*{name}"placeholder="Name"/>
+                            <input type="text" class="form-control" id="name" th:field="*{name}"placeholder="Name"/>
                             <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name MEssage</div>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control"  th:field="*{username}" placeholder="Username" />
+                            <input type="text" class="form-control"  id="username" th:field="*{username}" placeholder="Username" />
                             <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Message</div>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="password" class="form-control" th:field="*{password}" placeholder="Password"/>
+                            <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Password"/>
                             <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Message</div>
                         </div>
                         <button class="btn btn-light btn-sm" type="submit">Submit</button>

@@ -2,6 +2,7 @@ package projekti.repository;
 
 import projekti.domain.Account;
 import java.util.List;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

@@ -130,7 +130,7 @@ public class ProfileServiceTest {
         Account user2 = profServ.getAccountByUsername("user2");
         Account foll2 = profServ.getAccountByUsername("foll2");
         profServ.addFollowerTo(user2, foll2);
-        assertTrue(profServ.isFollowerTo("user2", "foll2"));
+        assertTrue(profServ.isFollowerTo(user2, "foll2"));
     }
 
     @Test

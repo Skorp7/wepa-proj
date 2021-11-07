@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import projekti.domain.Image;
 
 @Controller
 public class ImageController {
@@ -33,7 +32,7 @@ public class ImageController {
         model.addAttribute("images", imgServ.getImagesByAccount(acc));
         model.addAttribute("account", acc);
         model.addAttribute("isOwner", auth.getName().equals(username));
-        model.addAttribute("isFollower", profServ.isFollowerTo(username, auth.getName()));
+        model.addAttribute("isFollower", profServ.isFollowerTo(acc, auth.getName()));
         return "pics";
     }
 
@@ -42,8 +41,12 @@ public class ImageController {
             @RequestParam boolean icon,
             @RequestParam String text,
             @PathVariable String username) throws IOException {
-        imgServ.addImage(file, username, icon, text);
-        return "redirect:/profiles/" + username + "/pics";
+        if (imgServ.addImage(file, username, icon, text)) {
+            return "redirect:/profiles/" + username + "/pics";
+        } else {
+            return "redirect:/profile";
+        }
+
     }
 
     @PostMapping("/profiles/{username}/delpic")
@@ -55,16 +58,19 @@ public class ImageController {
     @GetMapping(path = "/profiles/{username}/pics/{id}/content", produces = "image/jpg")
     @ResponseBody
     public byte[] get(@PathVariable String username, @PathVariable Long id) {
-        //check if image request is coming from an owner or follower
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        boolean isOwner = auth.getName().equals(username);
-        boolean isFollower = profServ.isFollowerTo(username, auth.getName());
-        Image img = imgServ.getImageById(id);
-        if ((isOwner || isFollower) || img.isIcon()) {
-            return img.getContent();
-        }
-        byte[] errorBytes = {1,2};
-        return errorBytes;
+//        Use this codeblock if you want to check if image request is coming from an owner or follower
+//        It slows down the program by doing many database querys:
+
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        boolean isOwner = auth.getName().equals(username);
+//        boolean isFollower = profServ.isFollowerTo(username, auth.getName());
+//        Image img = imgServ.getImageById(id);
+//        if ((isOwner || isFollower) || img.isIcon()) {
+//            return img.getContent();
+//        }
+//        byte[] errorBytes = {1,2};
+//        return errorBytes;
+        return imgServ.getImageById(id).getContent();
     }
 
 }

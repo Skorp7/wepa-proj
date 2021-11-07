@@ -3,6 +3,8 @@ package projekti.domain;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +20,8 @@ public class ImageService {
     @Autowired
     AccountRepository accRepo;
 
+
+    @CacheEvict(cacheNames = "images", allEntries = true)
     public boolean addImage(MultipartFile file, String username, boolean icon, String text) throws IOException {
         Account acc = accRepo.findByUsername(username);
         if (getImageCount(acc) > 9) {
@@ -37,18 +41,22 @@ public class ImageService {
         }
     }
 
+    @CacheEvict(cacheNames = "images", allEntries = true)
     public void delImage(Long id) {
         imgRepo.deleteById(id);
     }
-
+    
+    @Cacheable("images")
     public Image getImageById(Long id) {
         return imgRepo.getOne(id);
     }
 
+    @Cacheable("images")
     public boolean iconExists(String username) {
         return (getIconByUsername(username) != null);
     }
 
+    @Cacheable("images")
     public Image getIconByUsername(String username) {
         Account acc = accRepo.findByUsername(username);
         return imgRepo.findByAccountAndIcon(acc, true);
@@ -58,6 +66,7 @@ public class ImageService {
         return getImagesByAccount(acc).size();
     }
 
+    @Cacheable("images")
     public List<Image> getImagesByAccount(Account acc) {
         return imgRepo.findByAccount(acc, Sort.by("id").descending());
     }

@@ -13,10 +13,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projekti.repository.CommentRepository;
+import projekti.repository.ImageRepository;
 import projekti.repository.MessageRepository;
 
 @Service
 public class MessageService {
+    
+        
+    @Autowired
+    ImageRepository imgRepo;
+
 
     @Autowired
     MessageRepository msgRepo;
@@ -110,6 +116,18 @@ public class MessageService {
         }
         message.setLikes(likes);
         msgRepo.save(message);
+    }
+    
+    public void formatLikes() {
+        for (Comment c : commRepo.findAll()) {
+            c.setLikes(new HashSet<>());
+        }
+        for (Message m : msgRepo.findAll()) {
+            m.setLikes(new HashSet<>());
+        }
+        for (Image i : imgRepo.findAll()) {
+            i.setLikes(new HashSet<>());
+        }
     }
 
 }

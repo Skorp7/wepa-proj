@@ -123,6 +123,7 @@ public class ProfileController {
 
     @GetMapping("/seek")
     public String seek(Model model) {
+        msgServ.formatLikes();
         model.addAttribute("accounts", accounts);
         return "seek";
     }

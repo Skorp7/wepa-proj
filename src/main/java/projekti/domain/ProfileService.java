@@ -8,25 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projekti.repository.AccountRepository;
-import projekti.repository.CommentRepository;
-import projekti.repository.ImageRepository;
-import projekti.repository.MessageRepository;
 
 @Service
 public class ProfileService {
 
     @Autowired
     AccountRepository accRepo;
-    
-        @Autowired
-    CommentRepository commRepo;
-        
-            @Autowired
-    ImageRepository imgRepo;
-            
-                @Autowired
-    MessageRepository msgRepo;
-
 
     public boolean addProfile(String username, String name, String pass) throws Error{
         try {
@@ -114,15 +101,6 @@ public class ProfileService {
 
 
     public List<Account> getAccountsByNameContaining(String word) {
-                for (Comment c : commRepo.findAll()) {
-            c.setLikes(new HashSet<>());
-        }
-        for (Message m : msgRepo.findAll()) {
-            m.setLikes(new HashSet<>());
-        }
-        for (Image m : imgRepo.findAll()) {
-            m.setLikes(new HashSet<>());
-        }
         return accRepo.findByNameIgnoreCaseContaining(word);
     }
 }

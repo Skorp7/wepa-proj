@@ -1,7 +1,6 @@
 package projekti.domain;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class ImageService {
         if (getImageCount(acc) > 9) {
             return false;
         }
-        if (file.getContentType().contains("image")) {
+        if (file.getContentType().contains("image") || file.getSize() < 1048575) {
             if (icon && iconExists(username)) {
                 Image old_icon = getIconByUsername(username);
                 old_icon.setIcon(false);

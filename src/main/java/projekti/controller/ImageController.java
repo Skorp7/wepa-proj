@@ -45,6 +45,10 @@ public class ImageController {
             @RequestParam boolean icon,
             @RequestParam String text,
             @PathVariable String username) throws IOException {
+        if (file.getSize() > 1048575) {
+            return "redirect:/profile";
+        }
+            
         if (imgServ.addImage(file, username, icon, text)) {
             return "redirect:/profiles/" + username + "/pics";
         } else {

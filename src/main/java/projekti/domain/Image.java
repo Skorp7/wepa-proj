@@ -1,4 +1,3 @@
-
 package projekti.domain;
 
 import java.util.HashSet;

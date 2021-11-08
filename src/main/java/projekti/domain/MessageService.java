@@ -45,9 +45,6 @@ public class MessageService {
         return msgRepo.findOwnByAccountto(acc, pageable);
     }
 
-//    public HashMap<Message, List<Comment>> getOwnMessagesByAccount(Account acc) {
-//        return sortMessagesAndComments(getOwnMessagesByAccountUnSorted(acc));
-//    }
     public List<Message> getOwnAndFollowingMessagesByAccount(Account acc) {
         List<Message> messages = new ArrayList<>();
         messages.addAll(this.getOwnMessagesByAccount(acc));
@@ -59,22 +56,9 @@ public class MessageService {
         Collections.sort(messages, (Message a1, Message a2) -> a1.getDatetime().compareTo(a2.getDatetime()));
         Collections.reverse(messages);
         List<Message> cutMessages = messages.subList(0, Math.min(25, messages.size()));
-        //return msgRepo.findAllByAccountId(acc.getId());
         return cutMessages;
     }
 
-//    public HashMap<Message, List<Comment>> sortMessagesAndComments(List<Message> msgs) {
-//        HashMap<Message, List<Comment>> messages = new HashMap<>();
-//        for (Message msg : msgs) {
-//                List<Comment> comments = msg.getComments();
-//                Collections.sort(comments, (Comment a1, Comment a2) -> a1.getDatetime().compareTo(a2.getDatetime()));
-//                Collections.reverse(comments);
-//                List<Comment> cutComments = comments.subList(0, Math.min(10,comments.size()));
-//                Collections.reverse(cutComments);
-//                messages.put(msg, cutComments);
-//            }
-//        return messages;
-//    }
     @Transactional
     public boolean addComment(String comment, Account commenter, Long id, boolean isImage) {
         Comment comm = new Comment();

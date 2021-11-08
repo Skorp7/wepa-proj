@@ -2,10 +2,11 @@ package projekti.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,16 +20,16 @@ public class MessageService {
 
     @Autowired
     MessageRepository msgRepo;
-    
+
     @Autowired
     CommentRepository commRepo;
 
     @Autowired
     ImageService imgServ;
-    
+
     @Autowired
     ProfileService profServ;
-    
+
     public boolean addMessage(String message, Account accountto) {
         Message msg = new Message();
         msg.setAccountto(accountto);
@@ -42,11 +43,10 @@ public class MessageService {
         Pageable pageable = PageRequest.of(0, 25, Sort.by("datetime").descending());
         return msgRepo.findOwnByAccountto(acc, pageable);
     }
-    
+
 //    public HashMap<Message, List<Comment>> getOwnMessagesByAccount(Account acc) {
 //        return sortMessagesAndComments(getOwnMessagesByAccountUnSorted(acc));
 //    }
-
     public List<Message> getOwnAndFollowingMessagesByAccount(Account acc) {
         List<Message> messages = new ArrayList<>();
         messages.addAll(this.getOwnMessagesByAccount(acc));
@@ -61,7 +61,7 @@ public class MessageService {
         //return msgRepo.findAllByAccountId(acc.getId());
         return cutMessages;
     }
-    
+
 //    public HashMap<Message, List<Comment>> sortMessagesAndComments(List<Message> msgs) {
 //        HashMap<Message, List<Comment>> messages = new HashMap<>();
 //        for (Message msg : msgs) {
@@ -74,7 +74,6 @@ public class MessageService {
 //            }
 //        return messages;
 //    }
-    
     @Transactional
     public boolean addComment(String comment, Account commenter, Long id, boolean isImage) {
         Comment comm = new Comment();
@@ -89,8 +88,35 @@ public class MessageService {
             commentList.add(comm);
             msgRepo.save(msg);
         }
+        for (Comment c : commRepo.findAll()) {
+            c.setLikes(new HashSet<>());
+        }
+        for (Message m : msgRepo.findAll()) {
+            m.setLikes(new HashSet<>());
+        }
+        
         return true;
     }
-    
-    
+
+    @CacheEvict(cacheNames = "images", allEntries = true)
+    public void likeComment(long id, String accId) {
+        Comment comm = commRepo.getOne(id);
+        HashSet<String> likes = comm.getLikes();
+        if (!likes.add(accId)) {
+            likes.remove(accId);
+        }
+        comm.setLikes(likes);
+        commRepo.save(comm);
+    }
+
+    public void likeMessage(long id, String accId) {
+        Message message = msgRepo.getOne(id);
+        HashSet<String> likes = message.getLikes();
+        if (!likes.add(accId)) {
+            likes.remove(accId);
+        }
+        message.setLikes(likes);
+        msgRepo.save(message);
+    }
+
 }

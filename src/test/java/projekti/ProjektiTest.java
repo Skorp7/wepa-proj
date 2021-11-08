@@ -129,6 +129,35 @@ public class ProjektiTest extends org.fluentlenium.adapter.junit.FluentTest {
         assertTrue(pageSource().contains("This is how your followers see your wall"));
         assertTrue(pageSource().contains("Testiviesti!"));
     }
+    
+    @Test
+    public void ableToSendComment() {
+        goTo("http://localhost:" + port + "/profile");
+        if (!pageSource().contains("People you follow:")) {
+            this.login();
+            goTo("http://localhost:" + port + "/profile");
+        }
+        assertTrue(pageSource().contains("People you follow:"));
+        //Submit a message
+        find("#msgtext").fill().with("Testiviesti!");
+        find("#messageform").submit();
+        //Check we are still on My wall page
+        assertTrue(pageSource().contains("People you follow:"));
+        //And see the msg
+        assertTrue(pageSource().contains("Testiviesti!"));
+        find("#commenttext").fill().with("Kommentti");
+        find("#commentform").submit();
+        //Check we are still on My wall page
+        assertTrue(pageSource().contains("People you follow:"));
+        //And see the msg
+        assertTrue(pageSource().contains("Kommentti"));
+        //And we see it also in public profiles page
+        goTo("http://localhost:" + port + "/profiles/temppu2");
+        //Check we are on profiles page
+        assertTrue(pageSource().contains("This is how your followers see your wall"));
+        assertTrue(pageSource().contains("Kommentti"));
+    }
+    
 
     @Test
     public void followingChangesView() {

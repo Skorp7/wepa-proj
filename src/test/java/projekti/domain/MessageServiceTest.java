@@ -2,6 +2,8 @@ package projekti.domain;
 
 import javax.transaction.Transactional;
 import org.junit.After;
+import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,5 +77,32 @@ public class MessageServiceTest {
         assertTrue(msgServ.getOwnMessagesByAccount(acc).size() == 2); 
     }
     
+    @Transactional
+    @Test
+    public void ableToLikeAndDislike() {
+        profServ.addProfile("liker", "Liz", "pass");
+        profServ.addProfile("writer", "Writz", "pass");
+        Account acc = profServ.getAccountByUsername("writer");
+        msgServ.addMessage("Kiva viesti", acc);
+        Message msg = msgServ.getOwnMessagesByAccount(acc).get(0);
+        assertTrue(msg.getLikes().size() == 0);
+        msgServ.likeMessage(msg.getId(), "liker");
+        assertTrue(msg.getLikes().size() == 1);
+        msgServ.likeMessage(msg.getId(), "liker");
+        assertTrue(msg.getLikes().size() == 0);
+    }
     
+    @Transactional
+    @Test
+    public void commentGoesToTheRightMessage() {
+        profServ.addProfile("commenter", "Comz", "pass");
+        profServ.addProfile("writer2", "Writz2", "pass");
+        Account acc = profServ.getAccountByUsername("writer2");
+        Account accComm = profServ.getAccountByUsername("commenter");
+        msgServ.addMessage("Mielenkiintoa herättävä viesti", acc);
+        Message msg = msgServ.getOwnMessagesByAccount(acc).get(0);
+        msgServ.addComment("Kommentti!", accComm, msg.getId(), false);
+        assertTrue(msg.getComments().size() == 1);
+        assertEquals(msg.getComments().get(0).getComment(), "Kommentti!");
+    }
 }

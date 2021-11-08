@@ -1,6 +1,7 @@
 package projekti.domain;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -28,4 +29,5 @@ public class Message extends AbstractPersistable<Long> {
     @OneToMany
     List<Comment> comments;
     
+    private HashSet<String> likes = new HashSet<>();
 }

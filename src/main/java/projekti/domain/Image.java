@@ -1,6 +1,7 @@
 
 package projekti.domain;
 
+import java.util.HashSet;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -34,4 +35,6 @@ public class Image extends AbstractPersistable<Long> {
 
     @OneToMany
     List<Comment> comments;
+    
+    private HashSet<String> likes = new HashSet<>();;
 }

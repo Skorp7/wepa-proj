@@ -27,19 +27,40 @@
                     <li>
                         <div class="card">
                             <div class="card-body">
+                                <form id="likeform" action="/like" method="post">
+                                    <div>
+                                        <input type="hidden" value="img" name="what"/>
+                                        <input type="hidden" th:value="${img.id}" name="id"/>
+                                        <span class="span-small" th:text="${img.likes.size()}">likesCount</span>&nbsp;<input type="image" src="/like.png" alt="Submit" />
+                                    </div>
+                                </form>
                                 <img th:src="@{/profiles/{username}/pics/{id}/content(username=${account.username}, id=${img.id})}" th:alt="${img.text}"/>
                                 <br/>
-                                <span class="span-small" th:text="${img.text}">description</span>
-                                <form th:if="${isOwner}" th:action="@{/profiles/{username}/delpic(username=${account.username})}" method="post">
+                                <span class="span small" th:text="${img.text}">description</span>
+                                <form id="delform" th:if="${isOwner}" th:action="@{/profiles/{username}/delpic(username=${account.username})}" method="post">
                                     <input type="hidden" th:value="${img.id}" name="id"/>
                                     <button class="btn btn-outline-danger btn-sm" type="submit">Delete</button>
                                 </form>
+
                                 <div th:fragment="commentBox">
 
                                     <ul th:unless="${#lists.isEmpty(img.comments)}" th:each="comm : ${#numbers.sequence(T(Math).max(0, img.comments.size()-10), img.comments.size()-1)}">
                                         <li>
-                                        <small style="color:gray;" th:text="${{img.comments[comm].datetime}}">date</small> - <a th:href="@{/profiles/{username}(username=${img.comments[comm].account.username})}"><small th:text="${{img.comments[comm].account.name}}">name</small></a>
-                                        <p style="color:gray;font-size:15px;" th:text="${img.comments[comm].comment}">commenttext</p> 
+                                            <div class="row align-items-center">
+                                                <small style="color:gray;" th:text="${{img.comments[comm].datetime}}">date</small> &nbsp;
+                                                <a th:href="@{/profiles/{username}(username=${img.comments[comm].account.username})}">
+                                                    <small th:text="${img.comments[comm].account.name}">name</small>
+                                                </a>
+                                                <form id="commentlikeform" action="/like" method="post">
+                                                    <div>
+                                                        <input type="hidden" value="comm" name="what"/>
+                                                        <input type="hidden" th:value="${img.comments[comm].id}" name="id"/>
+                                                        <small th:text="${img.comments[comm].likes.size()}">likesCount</small>&nbsp;<input type="image" src="/like.png" alt="Submit" />
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <p style="color:gray;font-size:15px;" th:text="${img.comments[comm].comment}">commenttext</p> 
                                         </li>
                                     </ul>
 
@@ -49,7 +70,8 @@
                                         <button class="btn btn-light btn-sm" type="submit">Send</button>
                                     </form> 
                                 </div>
-                            </div></div>
+                            </div>
+                        </div>
                     </li>
                     <li>&nbsp;</li>
                 </ul>

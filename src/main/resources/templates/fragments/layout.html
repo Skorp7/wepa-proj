@@ -44,21 +44,44 @@
                         No messages yet.
                     </li>
 
-
                     <li th:each="key: ${messages}">
-                        <small th:text="${{key.datetime}}">date</small> - <a th:href="@{/profiles/{id}(id=${key.accountto.username})}"><small th:text="${{key.accountto.name}}">name</small></a>
+                        <div class="row align-items-center">
+                            <small th:text="${{key.datetime}}">date</small> &nbsp; 
+                            <a th:href="@{/profiles/{id}(id=${key.accountto.username})}">
+                                <small th:text="${{key.accountto.name}}">name</small>
+                            </a>
+                            <form id="likeform" action="/like" method="post">
+                                <div>
+                                    <input type="hidden" value="msg" name="what"/>
+                                    <input type="hidden" th:value="${key.id}" name="id"/>
+                                    <small th:text="${key.likes.size()}">likesCount</small>&nbsp;<input type="image" src="/like.png" alt="Submit" />
+                                </div>
+                            </form>
+                        </div>
                         <p th:text="${key.message}">msg</p> 
-                        
+
                         <div th:fragment="commentBox">
                             <ul th:unless="${#lists.isEmpty(key.comments)}" th:each="comm : ${#numbers.sequence(T(Math).max(0, key.comments.size()-10), key.comments.size()-1)}">
-<!--                            <ul th:each="comm : ${messages.get(key)}">-->
+                                <!--                            <ul th:each="comm : ${messages.get(key)}">-->
                                 <li>
-                                    <small style="color:gray;" th:text="${{key.comments[comm].datetime}}">date</small> - <a th:href="@{/profiles/{username}(username=${key.comments[comm].account.username})}"><small th:text="${{key.comments[comm].account.name}}">name</small></a>
+                                    <div class="row align-items-center">
+                                        <small style="color:gray;" th:text="${{key.comments[comm].datetime}}">date</small> &nbsp; 
+                                        <a th:href="@{/profiles/{username}(username=${key.comments[comm].account.username})}">
+                                            <small th:text="${{key.comments[comm].account.name}}">name</small>
+                                        </a>
+                                        <form id="commentlikeform" action="/like" method="post">
+                                            <div>
+                                                <input type="hidden" value="comm" name="what"/>
+                                                <input type="hidden" th:value="${key.comments[comm].id}" name="id"/>
+                                                <small th:text="${key.comments[comm].likes.size()}">likesCount</small>&nbsp;<input type="image" src="/like.png" alt="Submit" />
+                                            </div>
+                                        </form>
+                                    </div>
                                     <p style="color:gray;font-size:15px;" th:text="${key.comments[comm].comment}">commenttext</p> 
                                 </li>
                             </ul>
 
-                            <form id="commentform" th:action="@{/profiles/{username}/{id}(username=${account.username}, id=${key.id})}" method="POST">
+                            <form id="commentform" th:action="@{/comment/{id}(id=${key.id})}" method="POST">
                                 <span class="span-small" style="color:gray;">Comment:</span>
                                 <input id="commenttext" name="comment"/> 
                                 <button class="btn btn-light btn-sm" type="submit">Send</button>

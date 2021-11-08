@@ -9,6 +9,7 @@ import projekti.domain.Account;
 import projekti.domain.ImageService;
 import projekti.domain.ProfileService;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -107,17 +108,17 @@ public class ProfileController {
         return "redirect:/profile";
     }
     
-    @PostMapping("/profiles/{username}/{id}")
+    @PostMapping("/comment/{id}")
     public String commentMsg(@RequestParam String comment,
-            @PathVariable String username,
-            @PathVariable Long id) {
+            @PathVariable Long id,
+            HttpServletRequest request) {
         if (comment.length() < 2 || comment.length() > 200) {
-            return "redirect:/profiles/" + username;
+            return "redirect:" +  request.getHeader("Referer");
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account commenter = profServ.getAccountByUsername(auth.getName());
         msgServ.addComment(comment, commenter, id, false);
-        return "redirect:/profiles/" + username;
+        return "redirect:" +  request.getHeader("Referer");
     }
 
     @GetMapping("/seek")
@@ -131,4 +132,18 @@ public class ProfileController {
         accounts = profServ.getAccountsByNameContaining(word);
         return "redirect:/seek";
     }
+    
+    @PostMapping("/like") 
+    public String like(@RequestParam String what, @RequestParam Long id, HttpServletRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (what.equals("msg")) {
+            msgServ.likeMessage(id, auth.getName());
+        } else if (what.equals("comm")) {
+            msgServ.likeComment(id, auth.getName());
+        } else if (what.equals("img")) {
+            imgServ.likeImg(id, auth.getName());
+        }
+        return "redirect:" +  request.getHeader("Referer");
+    }
 }
+

@@ -2,6 +2,7 @@ package projekti.domain;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -21,7 +22,6 @@ public class ImageService {
     @Autowired
     AccountRepository accRepo;
 
-
     @CacheEvict(cacheNames = "images", allEntries = true)
     public boolean addImage(MultipartFile file, String username, boolean icon, String text) throws IOException {
         Account acc = accRepo.findByUsername(username);
@@ -34,14 +34,18 @@ public class ImageService {
                 old_icon.setIcon(false);
                 imgRepo.save(old_icon);
             }
-            Image img = new Image(file.getBytes(), acc, icon, text, new ArrayList<>());
+            Image img = new Image();
+            img.setContent(file.getBytes());
+            img.setAccount(acc);
+            img.setIcon(icon);
+            img.setText(text);
             imgRepo.save(img);
             return true;
         } else {
             return false;
         }
     }
-    
+
     @CacheEvict(cacheNames = "images", allEntries = true)
     public void addCommentToImage(Long id, Comment comment) {
         Image img = imgRepo.getOne(id);
@@ -52,9 +56,13 @@ public class ImageService {
 
     @CacheEvict(cacheNames = "images", allEntries = true)
     public void delImage(Long id) {
+        for (Image m : imgRepo.findAll()) {
+            m.setLikes(new HashSet<>());
+        }
+
         imgRepo.deleteById(id);
     }
-    
+
     @Cacheable("images")
     public Image getImageById(Long id) {
         return imgRepo.getOne(id);
@@ -78,5 +86,16 @@ public class ImageService {
     @Cacheable("images")
     public List<Image> getImagesByAccount(Account acc) {
         return imgRepo.findByAccount(acc, Sort.by("id").descending());
+    }
+
+    @CacheEvict(cacheNames = "images", allEntries = true)
+    public void likeImg(long id, String accId) {
+        Image img = imgRepo.getOne(id);
+        HashSet<String> likes = img.getLikes();
+        if (!likes.add(accId)) {
+            likes.remove(accId);
+        }
+        img.setLikes(likes);
+        imgRepo.save(img);
     }
 }

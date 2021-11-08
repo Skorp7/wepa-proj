@@ -7,7 +7,8 @@ body {
 }
 
 img{
-    max-width: 60vw;
+    width: auto;
+    max-width: 100%;
 }
 
 li { 
@@ -129,21 +130,6 @@ span {
     background-color: rgba(195, 240, 165, 0.623);
 }
 
-.closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.closebtn:hover {
-    color: rgb(109, 100, 100);
-}
-
 .column {
     float: left;
     width: 30%;
@@ -161,30 +147,6 @@ span {
     display: table;
     clear: both;
 }
-
-.mainButton {
-	box-shadow:inset 0px 1px 0px 0px #ffffff;
-	background:linear-gradient(to bottom, #ededed 5%, #cccccc 100%);
-	background-color:#ffffff;
-	border-radius: .3em;
-	border:1px solid #dcdcdc;
-	display:inline-block;
-	cursor:pointer;
-	color:rgb(94, 86, 86);
-	font-size:13px;
-	padding: .2em .5em;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;
-}
-.mainButton:hover {
-	background:linear-gradient(to bottom, #d2e4a7 5%, #d5e9ab 100%);
-	background-color: #dbecb3;
-}
-.mainButton:active {
-	position:relative;
-	top:1px;
-}
-
 
 input[name=search] {
     width: 130px;

@@ -99,7 +99,7 @@ public class ProfileController {
 
     @PostMapping("/messages")
     public String profilesAddMsg(@RequestParam String message) {
-        if (message.length() < 1) {
+        if (message.length() < 1 || message.length() > 220) {
             return "redirect:/profile";
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

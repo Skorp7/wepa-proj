@@ -20,6 +20,7 @@
                         <input id="word" type="text" name="word"/>
                         <button class="btn btn-light btn-sm" type="submit">Submit</button>
                     </form>
+                    <small>With empty input you can browse all users.</small>
                 </div>
                 <ul th:if="${#lists.isEmpty(accounts)}">
                     No results.

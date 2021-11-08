@@ -7117,3 +7117,12 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:/home/sakorp
 2021-11-07 23:13:21 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM COMMENT WHERE USERNAME = 24 LEFT[*] JOIN IMAGE_COMMENTS ON (ID = COMMENTS_ID)"; SQL statement:
 SELECT * FROM COMMENT WHERE USERNAME = 24 LEFT JOIN IMAGE_COMMENTS ON (ID = COMMENTS_ID) [42000-200]
+2021-11-08 19:52:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "MESSAGE VARCHAR(255)": "'Goofy debuted in animated cartoons, starting in 1932 with Mickey''s Revue as Dippy Dawg, who is older than Goofy would come to ... (442)"; SQL statement:
+insert into message (username, datetime, likes, message, id) values (?, ?, ?, ?, ?) [22001-200]
+2021-11-08 19:53:34 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "MESSAGE VARCHAR(255)": "STRINGDECODE('Goofy debuted in animated cartoons, starting in 1932 with Mickey''s Revue as Dippy Dawg, who is older than Goofy w... (344)"; SQL statement:
+insert into message (username, datetime, likes, message, id) values (?, ?, ?, ?, ?) [22001-200]
+2021-11-08 19:54:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "MESSAGE VARCHAR(255)": "STRINGDECODE(' ds fsdf sdaf dsfds sdf sdf dsfds fsdf sdf sdf sfs dds fsdf sdfsdf sfs dsdf sdfs dfs fsd fsdf sdfds fsdf sdf sdf s... (395)"; SQL statement:
+insert into message (username, datetime, likes, message, id) values (?, ?, ?, ?, ?) [22001-200]

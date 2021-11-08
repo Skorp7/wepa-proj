@@ -56,10 +56,6 @@ public class ImageService {
 
     @CacheEvict(cacheNames = "images", allEntries = true)
     public void delImage(Long id) {
-        for (Image m : imgRepo.findAll()) {
-            m.setLikes(new HashSet<>());
-        }
-
         imgRepo.deleteById(id);
     }
 

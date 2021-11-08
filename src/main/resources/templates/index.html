@@ -20,12 +20,16 @@
                         Welcome to Twiitser!<img src="/favicon.ico"/>
                     </div>
 
-                    <ul>
+                    <ul sec:authorize="!isAuthenticated()">
                         <li>Sign up or log in and you are able to:</li>
                         <li>&nbsp;</li>
                         <li>Share photos with friends</li>
                         <li>Follow friends or make new ones</li>
                         <li>Share your thoughts</li>
+                    </ul>
+                    <ul sec:authorize="isAuthenticated()">
+                        <li>Start by seeking your friends</li>
+                        <li>or updating your profile!</li>
                     </ul>
                 </div>
             </div>

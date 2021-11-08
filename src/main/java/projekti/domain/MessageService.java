@@ -87,14 +87,7 @@ public class MessageService {
             List<Comment> commentList = msg.getComments();
             commentList.add(comm);
             msgRepo.save(msg);
-        }
-        for (Comment c : commRepo.findAll()) {
-            c.setLikes(new HashSet<>());
-        }
-        for (Message m : msgRepo.findAll()) {
-            m.setLikes(new HashSet<>());
-        }
-        
+        }        
         return true;
     }
 

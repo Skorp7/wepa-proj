@@ -15,6 +15,10 @@ li {
     list-style: none; 
 }
 
+.ul-small {
+    padding-left: 0em;
+}
+
 .headers {
     font-family: 'Courier';
     color: rgb(51, 48, 48);

@@ -24,7 +24,7 @@ public class ImageService {
     @CacheEvict(cacheNames = "images", allEntries = true)
     public boolean addImage(MultipartFile file, String username, boolean icon, String text) throws IOException {
         Account acc = accRepo.findByUsername(username);
-        if (getImageCount(acc) > 9) {
+        if (getImageCount(acc) > 9 || file.isEmpty()) {
             return false;
         }
         if (file.getContentType().contains("image") || file.getSize() < 1048575) {

@@ -96,9 +96,7 @@
             {
             document.getElementById("error").innerHTML = "";
             document.getElementById("add").disabled = false;
-            }
-
-            if(upl.files[0].size > max)
+            } else if(upl.files[0].size > max)
             {
             document.getElementById("error").innerHTML = "Size exceeded! Max. 1MB!";
             document.getElementById("add").disabled = true;

@@ -75,7 +75,7 @@ public class MessageService {
         }        
         return true;
     }
-
+    
     @CacheEvict(cacheNames = "images", allEntries = true)
     public void likeComment(long id, String accId) {
         Comment comm = commRepo.getOne(id);

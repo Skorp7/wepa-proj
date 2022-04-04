@@ -3,7 +3,7 @@ Sosiaalisen median palvelu Twiitser web-palvelinohjelmointi 2021 -kurssilta
 
 https://wepa-proj.herokuapp.com/
 
-KÄYTTÖOHJE
+### KÄYTTÖOHJE
 
 Luo uusi tunnus napista Sign up tai kirjaudu sisään (Log in) valmiilla tunnuksella.
 Molemmissa tietokannoissa, sekä Herokussa että lokaalisti käynnistäessä on valmiiksi vähän sisältöä testauksen helpottamiseksi.
@@ -26,7 +26,7 @@ Torjuminen ei estä kommenttien näkymistä muiden käyttäjien sisällöissä.
 Aloita esimerkiksi hakutoiminnolla niin saat muita käyttäjiä näkyviin.
 
 
-KÄYNNISTÄMINEN LOKAALISTI LINUX-YMPÄRISTÖSSÄ
+### KÄYNNISTÄMINEN LOKAALISTI LINUX-YMPÄRISTÖSSÄ
 
 - lataa repositorion tiedostot
 - aja juuressa komento `mvn spring-boot:run`

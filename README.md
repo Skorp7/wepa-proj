@@ -24,3 +24,10 @@ sitten kumpikaan ei pysty seuraamaan enää toista ennen kuin torjunta perutaan.
 Torjuminen ei estä kommenttien näkymistä muiden käyttäjien sisällöissä.
 
 Aloita esimerkiksi hakutoiminnolla niin saat muita käyttäjiä näkyviin.
+
+
+KÄYNNISTÄMINEN LOKAALISTI LINUX-YMPÄRISTÖSSÄ
+
+- lataa repositorion tiedostot
+- aja juuressa komento `mvn spring-boot:run`
+- sovelluksen aukeaa osoitteessa http://localhost:8080

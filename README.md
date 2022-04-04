@@ -5,7 +5,7 @@ https://wepa-proj.herokuapp.com/
 
 ### KÄYTTÖOHJE
 
-Luo uusi tunnus napista Sign up tai kirjaudu sisään (Log in) valmiilla tunnuksella.
+Luo uusi tunnus napista *Sign up* tai kirjaudu sisään *Log in* valmiilla tunnuksella.
 Molemmissa tietokannoissa, sekä Herokussa että lokaalisti käynnistäessä on valmiiksi vähän sisältöä testauksen helpottamiseksi.
 ___________________________
 Herokun valmis testitunnus:

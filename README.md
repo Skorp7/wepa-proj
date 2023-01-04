@@ -1,7 +1,6 @@
 # Wepa-projekti Twiitser
 Sosiaalisen median palvelu Twiitser web-palvelinohjelmointi 2021 -kurssilta
 
-https://wepa-proj.herokuapp.com/
 
 ### KÄYTTÖOHJE
 

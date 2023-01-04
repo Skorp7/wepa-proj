@@ -5,11 +5,8 @@ Sosiaalisen median palvelu Twiitser web-palvelinohjelmointi 2021 -kurssilta
 ### KÄYTTÖOHJE
 
 Luo uusi tunnus napista *Sign up* tai kirjaudu sisään *Log in* valmiilla tunnuksella.
-Molemmissa tietokannoissa, sekä Herokussa että lokaalisti käynnistäessä on valmiiksi vähän sisältöä testauksen helpottamiseksi.
-___________________________
-Herokun valmis testitunnus:
-username: roope
-salasana: kissa
+Lokaalisti käynnistäessä tietokannassa on valmiiksi vähän sisältöä testauksen helpottamiseksi.
+
 ___________________________
 Lokaalin valmis testitunnus:
 username: napis

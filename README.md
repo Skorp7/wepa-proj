@@ -1,7 +1,7 @@
 # Wepa-projekti Twiitser
 Sosiaalisen median palvelu Twiitser web-palvelinohjelmointi 2021 -kurssilta.
 
-[Tehtävänanto](https://web-palvelinohjelmointi-21.mooc.fi/projekti) sisälsi palvelun pakolliset toiminnot. Toteutustapa oli melko vapaa. Springiä piti käyttää ja kurssin aika opittuja asioita sai hyödyntää.
+[Tehtävänanto](https://web-palvelinohjelmointi-21.mooc.fi/projekti) sisälsi palvelun pakolliset toiminnot. Toteutustapa oli melko vapaa. Springiä piti käyttää ja kurssin aikana opittuja asioita sai hyödyntää.
 
 
 ### KÄYTTÖOHJE
